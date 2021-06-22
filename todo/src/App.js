@@ -4,17 +4,24 @@ import Tabs from "./component/Tabs";
 import AddTask from "./component/AddTask";
 import Items from "./component/Items";
 
+/*
+function addToLocalStorage(todos) {
+    // https://ru.stackoverflow.com/questions/764544/%d0%9a%d0%b0%d0%ba-%d1%81%d0%be%d1%85%d1%80%d0%b0%d0%bd%d0%b8%d1%82%d1%8c-%d0%b7%d0%bd%d0%b0%d1%87%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bf%d0%b5%d1%80%d0%b5%d0%bc%d0%b5%d0%bd%d0%bd%d0%be%d0%b9-%d0%b2-javascript
+    localStorage.setItem("myTodo", JSON.stringify(todos));
+}
+
+function getTodo() {
+    if (localStorage.getItem("myTodo")) {
+        return JSON.parse(localStorage.getItem("myTodo"))
+    }
+    return [];
+}
+ */
 
 
 export default class App extends Component {
   state = {
-    todoData: [{ status: "active", isImportant: true, content: 'dfdfadgadg', index: 0 },
-      { status: "done", isImportant: false, content: 'wrgwr wr gwr gwre g', index: 1 },
-      { status: "active", isImportant: true, content: 'wd fw dc wdc wef wte', index: 2 },
-      { status: "done", isImportant: true, content: 'wrgwr wr gwr gwre g', index: 3 },
-      { status: "active", isImportant: false, content: 'wd fw dc wdc wef wte', index: 4 },
-      { status: "done", isImportant: false, content: 'wrgwr wr gwr gwre g', index: 5 }
-    ],
+    todoData: [],
     newTask: '',
     searchValue: '',
     type: 'all',
@@ -43,8 +50,9 @@ export default class App extends Component {
     })
   }
   addTask = () => {
-    let newTask = { status: "done", isImportant: false, content: this.state.newTask, index: this.state.todoData.length +1}
+    let newTask = { status: "active", isImportant: false, content: this.state.newTask, index: this.state.todoData.length +1}
     this.state.newTask = ''
+    localStorage.setItem("myTodo", JSON.stringify([...this.state.todoData, newTask]));
     this.setState(({todoData})=>{
       return {
         todoData: [...todoData, newTask]
@@ -78,6 +86,7 @@ export default class App extends Component {
         i.isImportant = !i.isImportant
       }
     }
+    localStorage.setItem("myTodo", JSON.stringify([...this.state.todoData]));
     this.setState(({todoData})=>{
       return {
         todoData: this.state.todoData
@@ -86,6 +95,7 @@ export default class App extends Component {
   }
   deleteHandler = (index) => {
     this.state.todoData = this.state.todoData.filter(el => el.index != index)
+    localStorage.setItem("myTodo", JSON.stringify([...this.state.todoData]));
     this.setState(({todoData})=>{
       return {
         todoData: this.state.todoData
@@ -104,26 +114,37 @@ export default class App extends Component {
         }
       }
     }
+    localStorage.setItem("myTodo", JSON.stringify([...this.state.todoData]));
     this.setState(({todoData})=>{
       return {
         todoData: this.state.todoData
       }
     })
   }
+
+
+  localSt(){
+    if (localStorage.getItem("myTodo")) {
+      return JSON.parse(localStorage.getItem("myTodo"))
+    }
+  }
+
   render() {
-    const todoToRender = this.state.todoData.reverse()
+    this.state.todoData = this.localSt()
+
+
+
+    const todoToRender = this.state.todoData
         .filter(el => this.filterTodo(el, this.state.type))
         .filter(el => this.filterSearch(el.content, this.state.searchValue))
     
     return (
-
         <div className="App">
           <Header searchValue={this.state.searchValue} searchHandler={this.searchHandler}/>
           <Tabs typeHandler={this.typeHandler}/>
           <AddTask newTask={this.state.newTask} taskHandler={this.taskHandler} addTask={this.addTask}/>
-          <Items todoToRender={todoToRender} importantHandler={this.importantHandler} deleteHandler={this.deleteHandler} handlerStatus={this.handlerStatus}/>
+          <Items todoToRender={todoToRender.reverse()} importantHandler={this.importantHandler} deleteHandler={this.deleteHandler} handlerStatus={this.handlerStatus}/>
         </div>
     );
-
   }
 }
