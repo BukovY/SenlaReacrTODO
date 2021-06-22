@@ -4,20 +4,6 @@ import Tabs from "./component/Tabs";
 import AddTask from "./component/AddTask";
 import Items from "./component/Items";
 
-/*
-function addToLocalStorage(todos) {
-    // https://ru.stackoverflow.com/questions/764544/%d0%9a%d0%b0%d0%ba-%d1%81%d0%be%d1%85%d1%80%d0%b0%d0%bd%d0%b8%d1%82%d1%8c-%d0%b7%d0%bd%d0%b0%d1%87%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bf%d0%b5%d1%80%d0%b5%d0%bc%d0%b5%d0%bd%d0%bd%d0%be%d0%b9-%d0%b2-javascript
-    localStorage.setItem("myTodo", JSON.stringify(todos));
-}
-
-function getTodo() {
-    if (localStorage.getItem("myTodo")) {
-        return JSON.parse(localStorage.getItem("myTodo"))
-    }
-    return [];
-}
- */
-
 
 export default class App extends Component {
   state = {
@@ -26,7 +12,6 @@ export default class App extends Component {
     searchValue: '',
     type: 'all',
   };
-
 
   searchHandler = (ev) => {
     this.setState(({searchValue})=>{
@@ -78,8 +63,6 @@ export default class App extends Component {
       return true
     }
   }
-
-
   importantHandler = (index) => {
     for(let i of this.state.todoData){
       if(i.index == index){
@@ -121,11 +104,11 @@ export default class App extends Component {
       }
     })
   }
-
-
   localSt(){
     if (localStorage.getItem("myTodo")) {
       return JSON.parse(localStorage.getItem("myTodo"))
+    } else {
+      return []
     }
   }
 
