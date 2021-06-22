@@ -58,8 +58,8 @@ export default class App extends Component {
     return false
   }
   filterSearch = (content, serchterm) =>{
-    content.toUpperCase()
-    serchterm.toUpperCase()
+    content = content.toUpperCase()
+    serchterm = serchterm.toUpperCase()
     if(content.indexOf(serchterm) == -1){
       return false
     } else {
