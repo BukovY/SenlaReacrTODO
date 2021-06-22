@@ -25,7 +25,8 @@ const Item = ({ el, importantHandler, deleteHandler, handlerStatus}) => {
     return (
         <div className={important} key={el.index} onClick={(ev) => handlerStatus(el.index, ev.target)} >
             <div className="taskcontent">
-                <img src={starRender}/>
+                {el.isImportant ? <img src={starRender}/> : ''}
+
 
                 <p className={textDone}>{el.content}</p>
             </div>
