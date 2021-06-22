@@ -113,7 +113,7 @@ export default class App extends Component {
     const todoToRender = this.state.todoData.reverse()
         .filter(el => this.filterTodo(el, this.state.type))
         .filter(el => this.filterSearch(el.content, this.state.searchValue))
-    
+
     return (
 
         <div className="App">
