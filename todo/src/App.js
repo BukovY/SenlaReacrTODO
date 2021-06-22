@@ -35,7 +35,11 @@ export default class App extends Component {
     })
   }
   addTask = () => {
-    let newTask = { status: "active", isImportant: false, content: this.state.newTask, index: this.state.todoData.length +1}
+    let index = 0;
+    if(this.state.todoData.length != 0){
+      index = this.state.todoData[this.state.todoData.length-1].index +1
+    }
+    let newTask = { status: "active", isImportant: false, content: this.state.newTask, index: index}
     this.state.newTask = ''
     localStorage.setItem("myTodo", JSON.stringify([...this.state.todoData, newTask]));
     this.setState(({todoData})=>{
@@ -113,9 +117,6 @@ export default class App extends Component {
 
   render() {
     this.state.todoData = this.localSt()
-
-
-
     const todoToRender = this.state.todoData
         .filter(el => this.filterTodo(el, this.state.type))
         .filter(el => this.filterSearch(el.content, this.state.searchValue))
