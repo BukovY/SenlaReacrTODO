@@ -57,7 +57,6 @@ export default class App extends Component {
     content.toUpperCase()
     serchterm.toUpperCase()
     if(content.indexOf(serchterm) == -1){
-      console.log('in')
       return false
     } else {
       return true
@@ -122,11 +121,14 @@ export default class App extends Component {
         .filter(el => this.filterSearch(el.content, this.state.searchValue))
     
     return (
-        <div className="App">
+        <div className="container">
           <Header searchValue={this.state.searchValue} searchHandler={this.searchHandler}/>
-          <Tabs typeHandler={this.typeHandler}/>
+          <div className="content">
+          <Tabs typeHandler={this.typeHandler} type={this.state.type}/>
           <AddTask newTask={this.state.newTask} taskHandler={this.taskHandler} addTask={this.addTask}/>
+            <div className="clearfix"></div>
           <Items todoToRender={todoToRender.reverse()} importantHandler={this.importantHandler} deleteHandler={this.deleteHandler} handlerStatus={this.handlerStatus}/>
+          </div>
         </div>
     );
   }
