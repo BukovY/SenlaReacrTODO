@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import deleteIcon from '../img/Delete.png'
 import star from '../img/Star.png'
 import starLine from '../img/StarLine.png'

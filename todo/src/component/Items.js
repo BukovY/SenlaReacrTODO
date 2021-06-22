@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Item from "./Item";
 const Items = ({ todoToRender, importantHandler, deleteHandler, handlerStatus}) => {
 
