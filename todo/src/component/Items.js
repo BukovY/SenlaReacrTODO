@@ -1,12 +1,8 @@
-
+import React, { Component } from 'react';
+import Item from "./Item";
 const Items = ({ todoToRender, importantHandler, deleteHandler, handlerStatus}) => {
 
-    let todo = todoToRender.map(el =>
-        <div key={el.index} onClick={(ev) => handlerStatus(el.index, ev.target)}>
-            <p>{el.content}</p>
-        <button onClick={() => importantHandler(el.index)}>{el.isImportant && 'NOT IMPORTANT'}{!el.isImportant && 'MARK IMPORTANT'}</button>
-        <button onClick={() => deleteHandler(el.index)}>Delete</button>
-    </div>)
+    let todo = todoToRender.map(el => <Item key={el.index} el={el} importantHandler={importantHandler} deleteHandler={deleteHandler} handlerStatus={handlerStatus}/>)
     return (<div>
         {todo}
     </div>)
