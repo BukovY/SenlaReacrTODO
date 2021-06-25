@@ -1,7 +1,7 @@
 import React from 'react';
 import placeholder from '../../../img/placeholderFilm.jpg'
 
-const Card = ({el, changeFilm, role, deliteFilm}) => {
+const Card = ({el, changeFilm, role, deliteFilm, openFilmInfo}) => {
     let link
     if(el.backdrop_path != null){
         link = 'https://image.tmdb.org/t/p/w500/' + el.backdrop_path
@@ -9,18 +9,8 @@ const Card = ({el, changeFilm, role, deliteFilm}) => {
         link = placeholder
     }
 
-    let change = () => {
-        changeFilm(el.id)
-    }
-    /*
-
-    let setId = () => {
-        props.setId(props.id)
-    }
-      {//<button onClick={deleteHandler}>Delete</button>}
-    */
     return(<>
-        <div class="cardFilm" filmid={el.id}>
+        <div class="cardFilm"  onClick={(ev) => openFilmInfo(el.id, ev.target.tagName)}>
             <p>{el.original_title}</p>
             <img src={link}/>
             <p>{el.vote_average} / {el.release_date}</p>

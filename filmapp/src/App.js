@@ -7,18 +7,41 @@ import ChangeFilm from "./component/Main/ChangeFilm";
 import Sign from "./component/Main/Sign";
 import Registration from "./component/Main/Registration";
 
-
+/*
+function validateVoteFilm(vote) {
+    if (vote.indexOf('.') == -1 && vote.indexOf(',') == -1 && vote > 0 && vote < 11) {
+        alert('Оценка корректная и она летит в запросе на сервер')
+    } else {
+        document.getElementById('myVote').className = 'inputError';
+        document.getElementById(state.divRender.validateWarning).innerHTML = 'Некорректная оценка, введите пожалуйста целое число от 0 до 10';
+    }
+}
+ */
 export default class App extends Component {
   state = {
-    // состояние приложения
     page: 'main', // notFound +main +addFilm filmInfo +changeFilm +sign +registration
     apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
     maxPage: 15,
     selectedFilter: 'Без фильтра',
-    role: 'admin',
+    role: 'user',
     userName: 'John',
     selectPage: 1,
     selectFilmId: 0,
+    inputs:{
+      userVote:{
+        value: '',
+        valid: false,
+        validateFunc: () => {
+          let input = this.state.inputs.userVote
+          if(input.value.indexOf('.') == -1 && input.value.indexOf(',') == -1 && input.value > 0 && input.value < 11){
+            alert('Оценка корректная и она летит в запросе на сервер')
+          } else {
+            input.valid = false
+          }
+        }
+      }
+
+    },
 
     "genres": [
       {
@@ -550,11 +573,40 @@ export default class App extends Component {
     })
   }
   deliteFilm = (id) => {
-    let films = this.state.filmData.filter(el => el.id != id)
-    this.setState(({filmData})=>{
+    this.setState(({filmData, page})=>{
       return {
-        filmData: [...films]
+        filmData: this.state.filmData.filter(el => el.id != id),
+        page: 'main'
       }
+    })
+  }
+  openFilmInfo = (id, tagName) => {
+    if(tagName != 'BUTTON'){
+      this.setState(({page, selectFilmId})=>{
+        return {
+          page: 'filmInfo',
+          selectFilmId: id
+        }
+      })
+    }
+  }
+  changeInput = (key, value) => {
+    let inputsNew = this.state.inputs
+    inputsNew[key].value = value
+    inputsNew[key].valid = true
+    this.setState(({inputs})=>{
+      return {
+        inputs: inputsNew,
+      }
+    })
+  }
+  validateInputs = (...arg) => {
+    for(let i of arg){
+      this.state.inputs[i].validateFunc()
+
+    }
+    this.setState(({})=>{
+      return {}
     })
   }
 
@@ -563,7 +615,7 @@ export default class App extends Component {
   render() {
     let selectedFilm = {}
     if(this.state.page == 'changeFilm' || this.state.page == 'filmInfo'){
-      selectedFilm = this.state.filmData.filter(el => el.id == this.state.selectFilmId)
+      selectedFilm = this.state.filmData.filter(el => el.id == this.state.selectFilmId)[0]
     }
 
     return (
@@ -573,9 +625,17 @@ export default class App extends Component {
                                                  role={this.state.role}
                                                  statusHandler={this.statusHandler}
                                                  changeFilm={this.changeFilm}
-                                                 deliteFilm={this.deliteFilm}/> : ''}
+                                                 deliteFilm={this.deliteFilm}
+                                                 openFilmInfo={this.openFilmInfo}/> : ''}
           {this.state.page == 'addFilm' ? <AddFilm/>: ''}
-          {this.state.page == 'filmInfo' ? <FilmInfo selectedFilm={selectedFilm}/> : ''}
+          {this.state.page == 'filmInfo' ? <FilmInfo selectedFilm={selectedFilm}
+                                                     genres={this.state.genres}
+                                                     role={this.state.role}
+                                                     changeFilm={this.changeFilm}
+                                                     deliteFilm={this.deliteFilm}
+                                                     changeInput={this.changeInput}
+                                                     userVote={this.state.inputs.userVote}
+                                                     validateInputs={this.validateInputs}/> : ''}
           {this.state.page == 'changeFilm' ? <ChangeFilm selectedFilm={selectedFilm}/> : ''}
           {this.state.page == 'sign' ? <Sign statusHandler={this.statusHandler}/> : ''}
           {this.state.page == 'registration' ? <Registration/> : ''}
