@@ -7,16 +7,7 @@ import ChangeFilm from "./component/Main/ChangeFilm";
 import Sign from "./component/Main/Sign";
 import Registration from "./component/Main/Registration";
 
-/*
-function validateVoteFilm(vote) {
-    if (vote.indexOf('.') == -1 && vote.indexOf(',') == -1 && vote > 0 && vote < 11) {
-        alert('Оценка корректная и она летит в запросе на сервер')
-    } else {
-        document.getElementById('myVote').className = 'inputError';
-        document.getElementById(state.divRender.validateWarning).innerHTML = 'Некорректная оценка, введите пожалуйста целое число от 0 до 10';
-    }
-}
- */
+
 export default class App extends Component {
   state = {
     page: 'main', // notFound +main +addFilm filmInfo +changeFilm +sign +registration
@@ -30,7 +21,7 @@ export default class App extends Component {
     inputs:{
       userVote:{
         value: '',
-        valid: false,
+        valid: true,
         validateFunc: () => {
           let input = this.state.inputs.userVote
           if(input.value.indexOf('.') == -1 && input.value.indexOf(',') == -1 && input.value > 0 && input.value < 11){
@@ -39,7 +30,28 @@ export default class App extends Component {
             input.valid = false
           }
         }
-      }
+      },
+      email:{
+        value: '',
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.email
+          let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          if(!re.test(String(input.value).toLowerCase())){
+            input.valid = false
+          }
+        }
+      },
+      password: {
+        value: '',
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.password
+          if(input.value.length < 5){
+            input.valid = false
+          }
+        }
+      },
 
     },
 
@@ -637,7 +649,11 @@ export default class App extends Component {
                                                      userVote={this.state.inputs.userVote}
                                                      validateInputs={this.validateInputs}/> : ''}
           {this.state.page == 'changeFilm' ? <ChangeFilm selectedFilm={selectedFilm}/> : ''}
-          {this.state.page == 'sign' ? <Sign statusHandler={this.statusHandler}/> : ''}
+          {this.state.page == 'sign' ? <Sign statusHandler={this.statusHandler}
+                                             email={this.state.inputs.email}
+                                             password={this.state.inputs.password}
+                                             changeInput={this.changeInput}
+                                             validateInputs={this.validateInputs}/> : ''}
           {this.state.page == 'registration' ? <Registration/> : ''}
 
 
