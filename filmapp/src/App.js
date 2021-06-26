@@ -14,8 +14,8 @@ export default class App extends Component {
     apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
     maxPage: 15,
     selectedFilter: 'Без фильтра',
-    role: 'def', // def user admin
-    userName: '',
+    role: 'admin', // def user admin
+    userName: 'admin',
     selectPage: 1,
     selectFilmId: 0,
     inputs:{
@@ -77,10 +77,92 @@ export default class App extends Component {
             input.valid = false
           }
         }
-      }
+      },
+      // add-change film
+      title: {
+        value: '',
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.title
+          input.valid = input.value.length > 6
+        }
+      },
+      description: {
+        value: '',
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.description
+          input.valid = input.value.length > 6
+        }
+      },
+      pathImage: {
+        value: '',
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.pathImage
+          input.valid = input.value.length > 6
+        }
+      },
+      popularity: {
+        value: '',
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.popularity
+          if(input.value.indexOf('.') == -1 && input.value.indexOf(',') == -1 && input.value > 0 && input.value < 11){
+            input.valid = true
+          } else {
+            input.valid = false
+          }
+        }
+      },
+      realiseDate: {
+        value: '',
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.realiseDate
+          input.valid = input.value != ''
+        }
+      },
+      genres: {
+        value: [],
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.genres
+          input.valid = input.value.length != 0
+        }
+      },
+      averageVote: {
+        value: '',
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.averageVote
+          if(input.value > 0 && input.value < 11){
+            input.valid = true
+          } else {
+            input.valid = false
+          }
+        }
+      },
+      voteCount: {
+        value: '',
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.voteCount
+          if(input.value > 0 && input.value < 250000){
+            input.valid = true
+          } else {
+            input.valid = false
+          }
+        }
+      },
+      isAdult: {
+        value: '',
+        valid: true,
+        validateFunc: () => {
+        }
+      },
     },
     warning: '',
-
     users: [{ name: "admin", password: "533533", role: "admin", email: 'admin@mail.ru' },
       { name: "John", password: "533533", role: "user", email: 'user@mail.ru' }],
 
@@ -899,7 +981,19 @@ export default class App extends Component {
                                                  openFilmInfo={this.openFilmInfo}
                                                  changePanginationPage={this.changePanginationPage}
                                                  changeFilter={this.changeFilter}/> : ''}
-          {this.state.page == 'addFilm' ? <AddFilm/>: ''}
+
+
+
+          {this.state.page == 'addFilm' ? <AddFilm title={this.state.inputs.title}
+                                                   description={this.state.inputs.description}
+                                                   pathImage={this.state.inputs.pathImage}
+                                                   popularity={this.state.inputs.popularity}
+                                                   realiseDate={this.state.inputs.realiseDate}
+                                                   genres={this.state.inputs.genres}
+                                                   averageVote={this.state.inputs.averageVote}
+                                                   voteCount={this.state.inputs.voteCount}
+                                                   isAdult={this.state.inputs.isAdult}
+                                                   genresMap={this.state.genres}/>: ''}
           {this.state.page == 'filmInfo' ? <FilmInfo selectedFilm={selectedFilm}
                                                      genres={this.state.genres}
                                                      role={this.state.role}
@@ -934,5 +1028,6 @@ export default class App extends Component {
 делаем карточку редактирования и добавления фильма
 делаем валидацию редактирования и добавления фильма
 
+сделать подгргузку жанров
 добиваем стили
  */
