@@ -14,3 +14,12 @@ code {
 .inputError {
   box-shadow: 0px 0px 3px 0px rgb(255 0 0 / 50%) inset;
 }
+.panginationActive {
+  background-color: rgb(30, 0, 255);
+  margin: 0 20px;
+  color: white;
+}
+.panginationDef {
+  background-color: rgb(176, 166, 255);
+  margin: 0 20px;
+}

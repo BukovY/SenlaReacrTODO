@@ -783,7 +783,12 @@ export default class App extends Component {
       return {}
     })
   }
-  changePanginationPage = (id) => {
+  changePanginationPage = (count) => {
+    this.setState(({selectPage})=>{
+      return {
+        selectPage: count
+      }
+    })
 
   }
 
