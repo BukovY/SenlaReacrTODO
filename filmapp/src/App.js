@@ -783,6 +783,9 @@ export default class App extends Component {
       return {}
     })
   }
+  changePanginationPage = (id) => {
+
+  }
 
 
 
@@ -797,10 +800,13 @@ export default class App extends Component {
           <Header username={this.state.userName} statusHandler={this.statusHandler} role={this.state.role}/>
           {this.state.page == 'main' ? <Homepage filmData={this.state.filmData}
                                                  role={this.state.role}
+                                                 selectPage={this.state.selectPage}
+                                                 maxPanginationPage={this.state.maxPage}
                                                  statusHandler={this.statusHandler}
                                                  changeFilm={this.changeFilm}
                                                  deliteFilm={this.deliteFilm}
-                                                 openFilmInfo={this.openFilmInfo}/> : ''}
+                                                 openFilmInfo={this.openFilmInfo}
+                                                 changePanginationPage={this.changePanginationPage}/> : ''}
           {this.state.page == 'addFilm' ? <AddFilm/>: ''}
           {this.state.page == 'filmInfo' ? <FilmInfo selectedFilm={selectedFilm}
                                                      genres={this.state.genres}
@@ -832,17 +838,13 @@ export default class App extends Component {
   }
 }
 /*
-делаем валидацию регистрации
-делаем карточку редактирования и добавления фильма
-делаем валидацию редактирования и добавления фильма
-делаем логинивание и разлогинивание по ролям
-
 делаем пангинацию
 делем фильтр
+делаем запросы, жанров и динамический запрос фильмов
 
-делаем запросы мыл для сравнения, жанров и динамический запрос фильмов
+делаем карточку редактирования и добавления фильма
+делаем валидацию редактирования и добавления фильма
 
 делаем прелоадер
-
 добиваем стили
  */
