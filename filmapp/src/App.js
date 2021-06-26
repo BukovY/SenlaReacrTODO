@@ -14,7 +14,7 @@ export default class App extends Component {
     apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
     maxPage: 15,
     selectedFilter: 'Без фильтра',
-    role: 'user',
+    role: 'user', // def user admin
     userName: 'John',
     selectPage: 1,
     selectFilmId: 0,
@@ -52,8 +52,37 @@ export default class App extends Component {
           }
         }
       },
-
+      name:{
+        value: '',
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.name
+          input.valid = input.value.match(/^[A-Za-zА-Яа-яЁё\s]+$/)
+        }
+      },
+      surname:{
+        value: '',
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.surname
+          input.valid = input.value.match(/^[A-Za-zА-Яа-яЁё\s]+$/)
+        }
+      },
+      repeatPassword:{
+        value: '',
+        valid: true,
+        validateFunc: () => {
+          let input = this.state.inputs.repeatPassword
+          if(input.value.length < 5){
+            input.valid = false
+          }
+        }
+      }
     },
+    warning: '',
+
+    users: [{ name: "admin", password: "533533", role: "admin", email: 'admin@mail.ru' },
+      { name: "John", password: "533533", role: "user", email: 'user@mail.ru' }],
 
     "genres": [
       {
@@ -612,11 +641,77 @@ export default class App extends Component {
       }
     })
   }
-  validateInputs = (...arg) => {
+  validateInputs = (key, ...arg) => {
     for(let i of arg){
       this.state.inputs[i].validateFunc()
-
     }
+    switch (key) { // changeVote signIn
+      case 'signIn':
+        let isAllValid = true
+        for(let i of arg){
+          if(this.state.inputs[i].valid == false){
+            isAllValid = false
+            break
+          }
+        }
+        if(isAllValid){
+          let current = ''
+          for(let i of this.state.users){
+            if(this.state.inputs.email.value == i.email) {
+              current = i
+              break
+            }
+          }
+          if(typeof current == 'object' ){ // email in
+            if(current.password == this.state.inputs.password.value){ // ok
+              // затираем значение перезаписываем имя и меняем роль перекидываем не главную
+              for(let i of arg){
+                this.state.inputs[i].value = ''
+              }
+              this.setState(({role, page, userName})=>{
+                return {
+                  role: current.role,
+                  page: 'main',
+                  userName: current.name
+                }
+              })
+            } else { // wrong password
+              this.state.inputs.password.valid = false
+              this.setState(({warning})=>{
+                return {
+                  warning: 'Wrong password'
+                }
+              })
+
+            }
+
+          } else { // email not found
+            this.state.inputs.email.valid = false
+            this.setState(({warning})=>{
+              return {
+                warning: 'Email not found'
+              }
+            })
+          }
+        }
+        break;
+      // еще случаи валидации на регистрацию изминение фильма и добавление фильма
+      case 'register':
+        let isAllValidReg = true
+        for(let i of arg){
+          if(this.state.inputs[i].valid == false){
+            isAllValidReg = false
+            break
+          }
+        }
+        console.log(isAllValidReg)
+
+        break;
+      default:
+        alert('Something wrong')
+        break;
+    }
+
     this.setState(({})=>{
       return {}
     })
@@ -652,9 +747,16 @@ export default class App extends Component {
           {this.state.page == 'sign' ? <Sign statusHandler={this.statusHandler}
                                              email={this.state.inputs.email}
                                              password={this.state.inputs.password}
+                                             warning={this.state.warning}
                                              changeInput={this.changeInput}
                                              validateInputs={this.validateInputs}/> : ''}
-          {this.state.page == 'registration' ? <Registration/> : ''}
+          {this.state.page == 'registration' ? <Registration name={this.state.inputs.name}
+                                                             surname={this.state.inputs.surname}
+                                                             password={this.state.inputs.password}
+                                                             repeatPassword={this.state.inputs.repeatPassword}
+                                                             email={this.state.inputs.email}
+                                                             changeInput={this.changeInput}
+                                                             validateInputs={this.validateInputs}/> : ''}
 
 
         </div>

@@ -32,7 +32,7 @@ const FilmInfo = ({selectedFilm, role, changeFilm, deliteFilm, genres, changeInp
             <p>Vote count: {selectedFilm.vote_count}</p>
             {role == 'user' ? <input className={userVote.valid ? '':'inputError'} onChange={(ev) => changeInput('userVote', ev.target.value)} value={userVote.value}/> : ''}
             {role == 'user' && userVote.valid ? '' : 'Оценка некорректная, пожалуйста смените оценку'}
-            {role == 'user' ? <button onClick={() => validateInputs('userVote')}>Vote</button> : ''}
+            {role == 'user' ? <button onClick={() => validateInputs('changeVote','userVote')}>Vote</button> : ''}
         </div>
     );
 };

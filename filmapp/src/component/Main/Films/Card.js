@@ -10,7 +10,7 @@ const Card = ({el, changeFilm, role, deliteFilm, openFilmInfo}) => {
     }
 
     return(<>
-        <div class="cardFilm"  onClick={(ev) => openFilmInfo(el.id, ev.target.tagName)}>
+        <div className="cardFilm"  onClick={(ev) => openFilmInfo(el.id, ev.target.tagName)}>
             <p>{el.original_title}</p>
             <img src={link}/>
             <p>{el.vote_average} / {el.release_date}</p>
