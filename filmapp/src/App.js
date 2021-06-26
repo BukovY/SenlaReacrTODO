@@ -592,7 +592,7 @@ export default class App extends Component {
         this.state.selectPage = 1
         this.state.selectedFilter = 'Без фильтра'
         this.updateData()
-        
+
           break;
       case 'addFilm':
         this.setState(({page})=>{
@@ -785,14 +785,20 @@ export default class App extends Component {
     })
   }
   changePanginationPage = (count) => {
-    this.state.selectPage = count
-    this.state.isFetching = true
-    this.updateData()
+    this.setState(({selectedFilter})=>{
+      return {
+        selectPage: count,
+        isFetching: true
+      }
+    })
   }
   changeFilter = (item) => {
-    this.state.selectedFilter = item
-    this.state.isFetching = true
-    this.updateData()
+    this.setState(({selectedFilter})=>{
+      return {
+        selectedFilter: item,
+        isFetching: true
+      }
+    })
   }
 
   updateData =() => {
@@ -820,10 +826,10 @@ export default class App extends Component {
     fetch(url1)
         .then(response => {return response.json()})
         .then(data => {
-          this.state.isFetching = false
           this.setState(({filmData, isFetching})=>{
             return {
               filmData: data.results,
+              isFetching: false
             }
           })
         })
@@ -864,47 +870,11 @@ export default class App extends Component {
         })
         })
   }
-  /*
-  componentDidUpdate(prevProps, prevState, snapshot){
-    console.log(this.state.isFetching)
-    this.state.isFetching = false
-      let filter;
-      switch (this.state.selectedFilter) {
-        case 'Без фильтра':
-          filter = 'popularity.desc';
-          break;
-        case 'По убыванию рейтинга':
-          filter = 'vote_average.desc';
-          break;
-        case 'По возрастанию рейтинга':
-          filter = 'vote_average.asc';
-          break;
-        case 'По убыванию даты релиза':
-          filter = 'release_date.desc';
-          break;
-        case 'По возрастанию даты релиза':
-          filter = 'release_date.asc';
-          break;
-        default:
-          alert('Нет такого фильтра, если добавил чноно новое то отрефакторь чтоб работало старое')
-      }
-      let url1 = `https://api.themoviedb.org/3/discover/movie?api_key=${this.state.apiKey}&language=en-US&sort_by=${filter}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
-
-      fetch(url1)
-          .then(response => {return response.json()})
-          .then(data => {
-            console.log('in')
-            this.state.isFetching = true
-            this.setState(({filmData, isFetching})=>{
-              return {
-                filmData: data.results,
-              }
-            })
-          })
-            }
-   */
-
-
+  componentDidUpdate(nextProps, nextState, nextContext) {
+    if(this.state.isFetching){
+      this.updateData()
+    }
+  }
 
 
   render() {
@@ -961,11 +931,8 @@ export default class App extends Component {
 }
 /*
 
-делаем запросы, жанров и динамический запрос фильмов
-
 делаем карточку редактирования и добавления фильма
 делаем валидацию редактирования и добавления фильма
 
-делаем прелоадер
 добиваем стили
  */

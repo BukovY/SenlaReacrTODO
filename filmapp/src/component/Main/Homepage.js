@@ -7,7 +7,7 @@ const Homepage = ({filmData, role, statusHandler, changeFilm, deliteFilm, openFi
         <div className='main'>
             <Filter changeFilter={changeFilter}/>
             {role == 'admin' ? <button onClick={() => statusHandler('addFilm')}>Add film</button> : ''}
-            {isFetching ? '<p>Получаю данные...</p>'  : <Cards filmData={filmData} changeFilm={changeFilm} role={role} deliteFilm={deliteFilm} openFilmInfo={openFilmInfo}/>}
+            {isFetching ? <div className="loader"></div> : <Cards filmData={filmData} changeFilm={changeFilm} role={role} deliteFilm={deliteFilm} openFilmInfo={openFilmInfo}/>}
             <Pangination selectPage={selectPage} changePanginationPage={changePanginationPage} maxPanginationPage={maxPanginationPage}/>
         </div>
     );
