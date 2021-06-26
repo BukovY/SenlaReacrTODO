@@ -84,6 +84,8 @@ export default class App extends Component {
     users: [{ name: "admin", password: "533533", role: "admin", email: 'admin@mail.ru' },
       { name: "John", password: "533533", role: "user", email: 'user@mail.ru' }],
 
+    // https://code.tutsplus.com/ru/tutorials/fetching-data-in-your-react-application--cms-30670
+    isFetching: true,
     "genres": [
       {
         "id": 28,
@@ -162,7 +164,7 @@ export default class App extends Component {
         "name": "Western"
       }
     ],
-    "filmData": [
+    filmData: [
       {
         "adult": false,
         "backdrop_path": "/eqVgQwv8HfDN2tv4XWhqW5GryV4.jpg",
@@ -585,13 +587,12 @@ export default class App extends Component {
         })
         break;
       case 'main':
-        this.setState(({page})=>{
-          return {
-            page: 'main',
-            selectPage: 1,
-            selectedFilter: 'Без фильтра'
-          }
-        })
+        this.state.isFetching = true
+        this.state.page = 'main'
+        this.state.selectPage = 1
+        this.state.selectedFilter = 'Без фильтра'
+        this.updateData()
+        
           break;
       case 'addFilm':
         this.setState(({page})=>{
@@ -784,21 +785,135 @@ export default class App extends Component {
     })
   }
   changePanginationPage = (count) => {
-    this.setState(({selectPage})=>{
-      return {
-        selectPage: count
-      }
-    })
+    this.state.selectPage = count
+    this.state.isFetching = true
+    this.updateData()
+  }
+  changeFilter = (item) => {
+    this.state.selectedFilter = item
+    this.state.isFetching = true
+    this.updateData()
+  }
 
+  updateData =() => {
+    let filter;
+    switch (this.state.selectedFilter) {
+      case 'Без фильтра':
+        filter = 'popularity.desc';
+        break;
+      case 'По убыванию рейтинга':
+        filter = 'vote_average.desc';
+        break;
+      case 'По возрастанию рейтинга':
+        filter = 'vote_average.asc';
+        break;
+      case 'По убыванию даты релиза':
+        filter = 'release_date.desc';
+        break;
+      case 'По возрастанию даты релиза':
+        filter = 'release_date.asc';
+        break;
+      default:
+        alert('Нет такого фильтра, если добавил чноно новое то отрефакторь чтоб работало старое')
+    }
+    let url1 = `https://api.themoviedb.org/3/discover/movie?api_key=${this.state.apiKey}&language=en-US&sort_by=${filter}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
+    fetch(url1)
+        .then(response => {return response.json()})
+        .then(data => {
+          this.state.isFetching = false
+          this.setState(({filmData, isFetching})=>{
+            return {
+              filmData: data.results,
+            }
+          })
+        })
   }
 
 
 
+
+  componentDidMount() {
+    let filter1;
+    switch (this.state.selectedFilter) {
+      case 'Без фильтра':
+        filter1 = 'popularity.desc';
+        break;
+      case 'По убыванию рейтинга':
+        filter1 = 'vote_average.desc';
+        break;
+      case 'По возрастанию рейтинга':
+        filter1 = 'vote_average.asc';
+        break;
+      case 'По убыванию даты релиза':
+        filter1 = 'release_date.desc';
+        break;
+      case 'По возрастанию даты релиза':
+        filter1 = 'release_date.asc';
+        break;
+      default:
+        alert('Нет такого фильтра, если добавил чноно новое то отрефакторь чтоб работало старое')
+    }
+    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${this.state.apiKey}&language=en-US&sort_by=${filter1}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
+    fetch(url)
+        .then(response => {return response.json()})
+        .then(data => {this.setState(({filmData, isFetching})=>{
+          return {
+            filmData: data.results,
+            isFetching: false
+          }
+        })
+        })
+  }
+  /*
+  componentDidUpdate(prevProps, prevState, snapshot){
+    console.log(this.state.isFetching)
+    this.state.isFetching = false
+      let filter;
+      switch (this.state.selectedFilter) {
+        case 'Без фильтра':
+          filter = 'popularity.desc';
+          break;
+        case 'По убыванию рейтинга':
+          filter = 'vote_average.desc';
+          break;
+        case 'По возрастанию рейтинга':
+          filter = 'vote_average.asc';
+          break;
+        case 'По убыванию даты релиза':
+          filter = 'release_date.desc';
+          break;
+        case 'По возрастанию даты релиза':
+          filter = 'release_date.asc';
+          break;
+        default:
+          alert('Нет такого фильтра, если добавил чноно новое то отрефакторь чтоб работало старое')
+      }
+      let url1 = `https://api.themoviedb.org/3/discover/movie?api_key=${this.state.apiKey}&language=en-US&sort_by=${filter}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
+
+      fetch(url1)
+          .then(response => {return response.json()})
+          .then(data => {
+            console.log('in')
+            this.state.isFetching = true
+            this.setState(({filmData, isFetching})=>{
+              return {
+                filmData: data.results,
+              }
+            })
+          })
+            }
+   */
+
+
+
+
   render() {
+
     let selectedFilm = {}
     if(this.state.page == 'changeFilm' || this.state.page == 'filmInfo'){
       selectedFilm = this.state.filmData.filter(el => el.id == this.state.selectFilmId)[0]
     }
+
 
     return (
         <div className="container">
@@ -807,11 +922,13 @@ export default class App extends Component {
                                                  role={this.state.role}
                                                  selectPage={this.state.selectPage}
                                                  maxPanginationPage={this.state.maxPage}
+                                                 isFetching={this.state.isFetching}
                                                  statusHandler={this.statusHandler}
                                                  changeFilm={this.changeFilm}
                                                  deliteFilm={this.deliteFilm}
                                                  openFilmInfo={this.openFilmInfo}
-                                                 changePanginationPage={this.changePanginationPage}/> : ''}
+                                                 changePanginationPage={this.changePanginationPage}
+                                                 changeFilter={this.changeFilter}/> : ''}
           {this.state.page == 'addFilm' ? <AddFilm/>: ''}
           {this.state.page == 'filmInfo' ? <FilmInfo selectedFilm={selectedFilm}
                                                      genres={this.state.genres}
@@ -843,8 +960,7 @@ export default class App extends Component {
   }
 }
 /*
-делаем пангинацию
-делем фильтр
+
 делаем запросы, жанров и динамический запрос фильмов
 
 делаем карточку редактирования и добавления фильма

@@ -16,7 +16,7 @@ const Pangination = ({selectPage, changePanginationPage, maxPanginationPage}) =>
 
     return (
         <div className='main'>
-            {panginationItems.map(el => <button className={el[1] == selectPage ? 'panginationActive' : 'panginationDef'} onClick={() => changePanginationPage(el[1])}>{el[0]}</button>)}
+            {panginationItems.map(el => <button key={el[1]} className={el[1] == selectPage ? 'panginationActive' : 'panginationDef'} onClick={() => changePanginationPage(el[1])}>{el[0]}</button>)}
         </div>
     );
 };
