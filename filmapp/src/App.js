@@ -623,10 +623,14 @@ export default class App extends Component {
   }
   openFilmInfo = (id, tagName) => {
     if(tagName != 'BUTTON'){
-      this.setState(({page, selectFilmId})=>{
+      let inputs = this.state.inputs
+      inputs.userVote.valid = true
+      inputs.userVote.value = ''
+      this.setState(({page, selectFilmId, inputs})=>{
         return {
           page: 'filmInfo',
-          selectFilmId: id
+          selectFilmId: id,
+          inputs: this.state.inputs
         }
       })
     }
@@ -707,6 +711,11 @@ export default class App extends Component {
         console.log(isAllValidReg)
 
         break;
+      case 'changeVote':
+        this.setState(({})=>{
+          return {}
+        })
+        break
       default:
         alert('Something wrong')
         break;
