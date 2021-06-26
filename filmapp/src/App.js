@@ -14,8 +14,8 @@ export default class App extends Component {
     apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
     maxPage: 15,
     selectedFilter: 'Без фильтра',
-    role: 'admin', // def user admin
-    userName: 'admin',
+    role: 'def', // def user admin
+    userName: '',
     selectPage: 1,
     selectFilmId: 0,
     inputs:{
@@ -639,9 +639,10 @@ export default class App extends Component {
     let inputsNew = this.state.inputs
     inputsNew[key].value = value
     inputsNew[key].valid = true
-    this.setState(({inputs})=>{
+    this.setState(({inputs, warning})=>{
       return {
-        inputs: inputsNew,
+        inputs: this.state.inputs,
+        warning: ''
       }
     })
   }
@@ -702,18 +703,75 @@ export default class App extends Component {
       // еще случаи валидации на регистрацию изминение фильма и добавление фильма
       case 'register':
         let isAllValidReg = true
-        for(let i of arg){
-          if(this.state.inputs[i].valid == false){
-            isAllValidReg = false
-            break
+        let isUserRegister = false
+        for(let i of this.state.users){
+          if(i.email == this.state.inputs.email.value){
+            isUserRegister = true
+            this.state.warning = 'User is registred, signIn please'
           }
         }
-        console.log(isAllValidReg)
+        if(isUserRegister){ // return warning и сделать валидными все инпуты
+          console.log('regidtred user')
+          for(let i of arg){
+            this.state.inputs[i].valid = true
+          }
+          this.setState(({inputs, warning})=>{
+            return {
+              inputs: this.state.inputs,
+              warning: this.state.warning
+            }
+          })
+        } else {
+          for(let i of arg){
+            if(this.state.inputs[i].valid == false){
+              isAllValidReg = false
+            }
+          }
+
+          if(isAllValidReg && this.state.inputs.password.value == this.state.inputs.repeatPassword.value){
+            // log new user role user
+            let newUser = {name: this.state.inputs.name.value, password: this.state.inputs.password.value, role: "user", email: this.state.inputs.email.value}
+            // def inputs
+            for(let i of arg){
+              this.state.inputs[i].value = ''
+            }
+            this.setState(({role, userName, users, inputs, page})=>{
+              return {
+                page: 'main',
+                role: 'user',
+                userName: newUser.name,
+                users: [...this.state.users, newUser],
+                inputs: this.state.inputs
+              }
+            })
+          } else { {
+            this.setState(({inputs})=>{
+              return {
+                inputs: this.state.inputs,
+              }
+            })
+          }
+          }
+        }
+
+
+
 
         break;
       case 'changeVote':
         this.setState(({})=>{
           return {}
+        })
+        break
+      case 'clearRegister':
+        for(let i of arg){
+          this.state.inputs[i].value = ''
+          this.state.inputs[i].valid = true
+        }
+        this.setState(({inputs})=>{
+          return {
+            inputs: this.state.inputs
+          }
         })
         break
       default:
@@ -764,8 +822,9 @@ export default class App extends Component {
                                                              password={this.state.inputs.password}
                                                              repeatPassword={this.state.inputs.repeatPassword}
                                                              email={this.state.inputs.email}
+                                                             warning={this.state.warning}
                                                              changeInput={this.changeInput}
-                                                             validateInputs={this.validateInputs}/> : ''}
+                                                             validateInputs={this.validateInputs} /> : ''}
 
 
         </div>
