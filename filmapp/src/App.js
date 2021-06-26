@@ -14,8 +14,8 @@ export default class App extends Component {
     apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
     maxPage: 15,
     selectedFilter: 'Без фильтра',
-    role: 'user', // def user admin
-    userName: 'John',
+    role: 'admin', // def user admin
+    userName: 'admin',
     selectPage: 1,
     selectFilmId: 0,
     inputs:{
