@@ -678,9 +678,19 @@ export default class App extends Component {
 
           break;
       case 'addFilm':
+        for(let i of ['title', 'description', 'pathImage', 'popularity', 'realiseDate', 'genres','averageVote', 'voteCount', 'isAdult']){
+          if(i != 'genres'){
+            this.state.inputs[i].value = ''
+            this.state.inputs[i].valid = true
+          } else {
+            this.state.inputs[i].value = []
+            this.state.inputs[i].valid = true
+          }
+        }
         this.setState(({page})=>{
           return {
-            page: 'addFilm'
+            page: 'addFilm',
+            inputs: this.state.inputs
           }
         })
           break;
@@ -690,10 +700,31 @@ export default class App extends Component {
     }
   }
   changeFilm = (id) => {
+    // записать параметры фильмы в инпуты
+    let film = this.state.filmData.filter(el => el.id == id)[0]
+    this.state.inputs.title.value = film.original_title
+    this.state.inputs.title.valid = true
+    this.state.inputs.description.value = film.overview
+    this.state.inputs.description.valid = true
+    this.state.inputs.pathImage.value = film.poster_path
+    this.state.inputs.pathImage.valid = true
+    this.state.inputs.popularity.value = Number(film.popularity)
+    this.state.inputs.popularity.valid = true
+    this.state.inputs.realiseDate.value = film.release_date
+    this.state.inputs.realiseDate.valid = true
+    this.state.inputs.genres.value = film.genre_ids
+    this.state.inputs.genres.valid = true
+    this.state.inputs.averageVote.value = Number(film.vote_average)
+    this.state.inputs.averageVote.valid = true
+    this.state.inputs.voteCount.value = Number(film.vote_count)
+    this.state.inputs.voteCount.valid = true
+    this.state.inputs.isAdult.value = Number(film.adult)
+    this.state.inputs.isAdult.valid = true
     this.setState(({page, selectFilmId})=>{
       return {
         page: 'changeFilm',
         selectFilmId: id,
+        inputs: this.state.inputs
       }
     })
   }
@@ -845,8 +876,13 @@ export default class App extends Component {
         break
       case 'clear':
         for(let i of arg){
-          this.state.inputs[i].value = ''
-          this.state.inputs[i].valid = true
+          if(i != 'genres'){
+            this.state.inputs[i].value = ''
+            this.state.inputs[i].valid = true
+          } else {
+            this.state.inputs[i].value = []
+            this.state.inputs[i].valid = true
+          }
         }
         this.setState(({inputs})=>{
           return {
@@ -942,7 +978,19 @@ export default class App extends Component {
       }
     })
   }
-
+  genresInputChange = (el) => {
+    let input = this.state.inputs.genres
+    if(input.value.indexOf(el) == -1){
+      input.value.push(el)
+    } else {
+      input.value = input.value.filter(element => element != el)
+    }
+    this.setState(({inputs})=>{
+      return {
+        inputs: inputs
+      }
+    })
+  }
 
 
 
@@ -1020,9 +1068,11 @@ export default class App extends Component {
                                                    voteCount={this.state.inputs.voteCount}
                                                    isAdult={this.state.inputs.isAdult}
                                                    genresMap={this.state.genres}
+                                                   genresInputChange={this.genresInputChange}
                                                    validateInputs={this.validateInputs}
                                                    adultInputChange={this.adultInputChange}
                                                    changeInput={this.changeInput}/>: ''}
+
           {this.state.page == 'filmInfo' ? <FilmInfo selectedFilm={selectedFilm}
                                                      genres={this.state.genres}
                                                      role={this.state.role}
@@ -1031,7 +1081,21 @@ export default class App extends Component {
                                                      changeInput={this.changeInput}
                                                      userVote={this.state.inputs.userVote}
                                                      validateInputs={this.validateInputs}/> : ''}
-          {this.state.page == 'changeFilm' ? <ChangeFilm selectedFilm={selectedFilm}/> : ''}
+          {this.state.page == 'changeFilm' ? <ChangeFilm title={this.state.inputs.title}
+                                                         id={this.state.selectFilmId}
+                                                         description={this.state.inputs.description}
+                                                         pathImage={this.state.inputs.pathImage}
+                                                         popularity={this.state.inputs.popularity}
+                                                         realiseDate={this.state.inputs.realiseDate}
+                                                         genres={this.state.inputs.genres}
+                                                         averageVote={this.state.inputs.averageVote}
+                                                         voteCount={this.state.inputs.voteCount}
+                                                         isAdult={this.state.inputs.isAdult}
+                                                         genresMap={this.state.genres}
+                                                         genresInputChange={this.genresInputChange}
+                                                         validateInputs={this.validateInputs}
+                                                         adultInputChange={this.adultInputChange}
+                                                         changeInput={this.changeInput}/> : ''}
           {this.state.page == 'sign' ? <Sign statusHandler={this.statusHandler}
                                              email={this.state.inputs.email}
                                              password={this.state.inputs.password}
@@ -1054,8 +1118,7 @@ export default class App extends Component {
 }
 /*
 
-делаем карточку редактирования и добавления фильма
-делаем валидацию редактирования и добавления фильма
+фиксим баги валидации
 
 сделать подгргузку жанров
 добиваем стили
