@@ -4,7 +4,7 @@ import placeholder from '../../../img/placeholderFilm.jpg'
 const Card = ({el, changeFilm, role, deliteFilm, openFilmInfo}) => {
     let link
     if(el.backdrop_path != null){
-        link = 'https://image.tmdb.org/t/p/w500/' + el.backdrop_path
+        link = 'https://image.tmdb.org/t/p/w500/' + el.poster_path
     } else {
         link = placeholder
     }
