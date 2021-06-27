@@ -136,10 +136,11 @@ export default class App extends Component {
         valid: true,
         validateFunc: () => {
           let input = this.state.inputs.averageVote
+
           if(input.value > 0 && input.value < 11){
-            input.valid = true
+            this.state.inputs.averageVote.valid = true
           } else {
-            input.valid = false
+            this.state.inputs.averageVote.valid = false
           }
         }
       },
@@ -836,17 +837,13 @@ export default class App extends Component {
           }
           }
         }
-
-
-
-
         break;
       case 'changeVote':
         this.setState(({})=>{
           return {}
         })
         break
-      case 'clearRegister':
+      case 'clear':
         for(let i of arg){
           this.state.inputs[i].value = ''
           this.state.inputs[i].valid = true
@@ -856,6 +853,23 @@ export default class App extends Component {
             inputs: this.state.inputs
           }
         })
+        break
+      case 'addFilm':
+        let addFilmAllValid = true;
+        for(let i of arg){
+          if(this.state.inputs[i].valid == false){
+            addFilmAllValid = false
+            break
+          }
+        }
+        if(addFilmAllValid){
+          alert('all valid go to DB')
+          this.setState(({})=>{
+            return {
+
+            }
+          })
+        }
         break
       default:
         alert('Something wrong')
@@ -1006,6 +1020,7 @@ export default class App extends Component {
                                                    voteCount={this.state.inputs.voteCount}
                                                    isAdult={this.state.inputs.isAdult}
                                                    genresMap={this.state.genres}
+                                                   validateInputs={this.validateInputs}
                                                    adultInputChange={this.adultInputChange}
                                                    changeInput={this.changeInput}/>: ''}
           {this.state.page == 'filmInfo' ? <FilmInfo selectedFilm={selectedFilm}

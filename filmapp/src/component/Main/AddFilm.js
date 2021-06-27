@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AddFilm = ({title, description, pathImage, popularity, realiseDate, genres, averageVote, voteCount, isAdult, genresMap, changeInput, adultInputChange}) => {
+const AddFilm = ({title, description, pathImage, popularity, realiseDate, genres, averageVote, voteCount, isAdult, genresMap, changeInput, adultInputChange, validateInputs}) => {
     return (
         <div className='main'>
             <h1>AppFilm</h1>
@@ -20,6 +20,8 @@ const AddFilm = ({title, description, pathImage, popularity, realiseDate, genres
             <input placeholder='voteCount' className={voteCount.valid ? '':'inputError'} onChange={(ev) => changeInput('voteCount', ev.target.value)} value={voteCount.value}/>
             {voteCount.valid ? '' : 'Incorrect voteCount'}
             <label>Adult<input placeholder='Alult' type="checkbox" checked={isAdult.value? 'checked': ''} onChange={(ev) => adultInputChange(isAdult.value)}/></label>
+            <button onClick={() => validateInputs('addFilm', 'title', 'description', 'pathImage', 'popularity', 'realiseDate', 'averageVote', 'voteCount', 'isAdult')}>Add</button>
+            <button onClick={() => validateInputs('clear', 'title', 'description', 'pathImage', 'popularity', 'realiseDate', 'averageVote', 'voteCount', 'isAdult')}>Clear</button>
         </div>
     );
 };

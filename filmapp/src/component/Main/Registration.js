@@ -16,7 +16,7 @@ const Registration = ({name, surname, password, repeatPassword, email, changeInp
             {email.valid ? '' : 'Incorrect email'}
             {warning.length > 0 ? warning : ''}
             <button onClick={() => validateInputs('register', 'name', 'surname', 'password', 'repeatPassword', 'email')}>Sign UP</button>
-            <button onClick={() => validateInputs('clearRegister', 'name', 'surname', 'password', 'repeatPassword', 'email')}>Clear</button>
+            <button onClick={() => validateInputs('clear', 'name', 'surname', 'password', 'repeatPassword', 'email')}>Clear</button>
         </div>
     );
 };
