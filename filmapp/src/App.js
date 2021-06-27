@@ -10,11 +10,11 @@ import Registration from "./component/Main/Registration";
 
 export default class App extends Component {
   state = {
-    page: 'main', // notFound +main +addFilm filmInfo +changeFilm +sign +registration
+    page: 'main',
     apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
     maxPage: 15,
     selectedFilter: 'Без фильтра',
-    role: 'admin', // def user admin
+    role: 'admin',
     userName: 'admin',
     selectPage: 1,
     selectFilmId: 0,
@@ -166,10 +166,8 @@ export default class App extends Component {
     warning: '',
     users: [{ name: "admin", password: "533533", role: "admin", email: 'admin@mail.ru' },
       { name: "John", password: "533533", role: "user", email: 'user@mail.ru' }],
-
-    // https://code.tutsplus.com/ru/tutorials/fetching-data-in-your-react-application--cms-30670
     isFetching: true,
-    "genres": [],
+    genres: [],
     filmData: [],
   };
 
@@ -194,11 +192,7 @@ export default class App extends Component {
         })
         break;
       case 'registration':
-        this.setState(({page})=>{
-          return {
-            page: 'registration',
-          }
-        })
+        this.setState(({page})=>{return{page: 'registration'}})
         break;
       case 'main':
         this.state.isFetching = true
@@ -206,7 +200,6 @@ export default class App extends Component {
         this.state.selectPage = 1
         this.state.selectedFilter = 'Без фильтра'
         this.updateData()
-
           break;
       case 'addFilm':
         for(let i of ['title', 'description', 'pathImage', 'popularity', 'realiseDate', 'genres','averageVote', 'voteCount', 'isAdult']){
@@ -218,12 +211,7 @@ export default class App extends Component {
             this.state.inputs[i].valid = true
           }
         }
-        this.setState(({page})=>{
-          return {
-            page: 'addFilm',
-            inputs: this.state.inputs
-          }
-        })
+        this.setState(({})=>{return {page: 'addFilm', inputs: this.state.inputs}})
           break;
         default:
           alert('Something wrong')
@@ -251,46 +239,24 @@ export default class App extends Component {
     this.state.inputs.voteCount.valid = true
     this.state.inputs.isAdult.value = String(film.adult)
     this.state.inputs.isAdult.valid = true
-    this.setState(({page, selectFilmId})=>{
-      return {
-        page: 'changeFilm',
-        selectFilmId: id,
-        inputs: this.state.inputs
-      }
-    })
+    this.setState(({})=>{return {page: 'changeFilm', selectFilmId: id, inputs: this.state.inputs}})
   }
   deliteFilm = (id) => {
-    this.setState(({filmData, page})=>{
-      return {
-        filmData: this.state.filmData.filter(el => el.id != id),
-        page: 'main'
-      }
-    })
+    this.setState(({})=>{return {filmData: this.state.filmData.filter(el => el.id != id), page: 'main'}})
   }
   openFilmInfo = (id, tagName) => {
     if(tagName != 'BUTTON'){
       let inputs = this.state.inputs
       inputs.userVote.valid = true
       inputs.userVote.value = ''
-      this.setState(({page, selectFilmId, inputs})=>{
-        return {
-          page: 'filmInfo',
-          selectFilmId: id,
-          inputs: this.state.inputs
-        }
-      })
+      this.setState(({})=>{return {page: 'filmInfo', selectFilmId: id, inputs: this.state.inputs}})
     }
   }
   changeInput = (key, value) => {
     let inputsNew = this.state.inputs
     inputsNew[key].value = value
     inputsNew[key].valid = true
-    this.setState(({inputs, warning})=>{
-      return {
-        inputs: this.state.inputs,
-        warning: ''
-      }
-    })
+    this.setState(({})=>{return {inputs: this.state.inputs, warning: ''}})
   }
   validateInputs = (key, ...arg) => {
     for(let i of arg){
@@ -319,34 +285,17 @@ export default class App extends Component {
               for(let i of arg){
                 this.state.inputs[i].value = ''
               }
-              this.setState(({role, page, userName})=>{
-                return {
-                  role: current.role,
-                  page: 'main',
-                  userName: current.name
-                }
-              })
+              this.setState(({})=>{return {role: current.role, page: 'main', userName: current.name}})
             } else { // wrong password
               this.state.inputs.password.valid = false
-              this.setState(({warning})=>{
-                return {
-                  warning: 'Wrong password'
-                }
-              })
-
+              this.setState(({})=>{return {warning: 'Wrong password'}})
             }
-
           } else { // email not found
             this.state.inputs.email.valid = false
-            this.setState(({warning})=>{
-              return {
-                warning: 'Email not found'
-              }
-            })
+            this.setState(({})=>{return {warning: 'Email not found'}})
           }
         }
         break;
-      // еще случаи валидации на регистрацию изминение фильма и добавление фильма
       case 'register':
         let isAllValidReg = true
         let isUserRegister = false
@@ -356,54 +305,28 @@ export default class App extends Component {
             this.state.warning = 'User is registred, signIn please'
           }
         }
-        if(isUserRegister){ // return warning и сделать валидными все инпуты
-          console.log('regidtred user')
+        if(isUserRegister){
           for(let i of arg){
             this.state.inputs[i].valid = true
           }
-          this.setState(({inputs, warning})=>{
-            return {
-              inputs: this.state.inputs,
-              warning: this.state.warning
-            }
-          })
+          this.setState(({})=>{return {inputs: this.state.inputs,warning: this.state.warning}})
         } else {
           for(let i of arg){
             if(this.state.inputs[i].valid == false){
               isAllValidReg = false
             }
           }
-
           if(isAllValidReg && this.state.inputs.password.value == this.state.inputs.repeatPassword.value){
-            // log new user role user
             let newUser = {name: this.state.inputs.name.value, password: this.state.inputs.password.value, role: "user", email: this.state.inputs.email.value}
-            // def inputs
             for(let i of arg){
               this.state.inputs[i].value = ''
             }
-            this.setState(({role, userName, users, inputs, page})=>{
-              return {
-                page: 'main',
-                role: 'user',
-                userName: newUser.name,
-                users: [...this.state.users, newUser],
-                inputs: this.state.inputs
-              }
-            })
-          } else { {
-            this.setState(({inputs})=>{
-              return {
-                inputs: this.state.inputs,
-              }
-            })
-          }
-          }
+            this.setState(({})=>{return {page: 'main', role: 'user', userName: newUser.name, users: [...this.state.users, newUser], inputs: this.state.inputs}})
+          } else {this.setState(({})=>{return {inputs: this.state.inputs,}})}
         }
         break;
       case 'changeVote':
-        this.setState(({})=>{
-          return {}
-        })
+        this.setState(({})=>{return {}})
         break
       case 'clear':
         for(let i of arg){
@@ -415,11 +338,7 @@ export default class App extends Component {
             this.state.inputs[i].valid = true
           }
         }
-        this.setState(({inputs})=>{
-          return {
-            inputs: this.state.inputs
-          }
-        })
+        this.setState(({})=>{return {inputs: this.state.inputs}})
         break
       case 'addFilm':
         let addFilmAllValid = true;
@@ -431,37 +350,20 @@ export default class App extends Component {
         }
         if(addFilmAllValid){
           alert('all valid go to DB')
-          this.setState(({})=>{
-            return {
-
-            }
-          })
+          this.setState(({})=>{return {}})
         }
         break
       default:
         alert('Something wrong')
         break;
     }
-
-    this.setState(({})=>{
-      return {}
-    })
+    this.setState(({})=>{return {}})
   }
   changePanginationPage = (count) => {
-    this.setState(({selectedFilter})=>{
-      return {
-        selectPage: count,
-        isFetching: true
-      }
-    })
+    this.setState(({})=>{return {selectPage: count,isFetching: true}})
   }
   changeFilter = (item) => {
-    this.setState(({selectedFilter})=>{
-      return {
-        selectedFilter: item,
-        isFetching: true
-      }
-    })
+    this.setState(({})=>{return {selectedFilter: item,isFetching: true}})
   }
 
   updateData =() => {
@@ -488,26 +390,12 @@ export default class App extends Component {
     let url1 = `https://api.themoviedb.org/3/discover/movie?api_key=${this.state.apiKey}&language=en-US&sort_by=${filter}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
     fetch(url1)
         .then(response => {return response.json()})
-        .then(data => {
-          this.setState(({filmData, isFetching})=>{
-            return {
-              filmData: data.results,
-              isFetching: false
-            }
-          })
-        })
+        .then(data => {this.setState(({})=>{return {filmData: data.results,isFetching: false}})})
   }
-
-
-  // add func
   adultInputChange = (el) => { // need inverse el
     let inputsNew = this.state.inputs
     inputsNew.isAdult.value = !el
-    this.setState(({inputs})=>{
-      return {
-        inputs: inputsNew
-      }
-    })
+    this.setState(({})=>{return {inputs: inputsNew}})
   }
   genresInputChange = (el) => {
     let input = this.state.inputs.genres
@@ -516,15 +404,8 @@ export default class App extends Component {
     } else {
       input.value = input.value.filter(element => element != el)
     }
-    this.setState(({inputs})=>{
-      return {
-        inputs: inputs
-      }
-    })
+    this.setState(({inputs})=>{return {inputs: inputs}})
   }
-
-
-
   componentDidMount() {
     let filter1;
     switch (this.state.selectedFilter) {
@@ -547,22 +428,13 @@ export default class App extends Component {
         alert('Нет такого фильтра, если добавил чноно новое то отрефакторь чтоб работало старое')
     }
     let url = `https://api.themoviedb.org/3/discover/movie?api_key=${this.state.apiKey}&language=en-US&sort_by=${filter1}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
-    // загружаем возможные жанры
-
     let genresUrl = `https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${this.state.apiKey}`
     fetch(genresUrl)
         .then(response => {return response.json()})
         .then(data => this.state.genres = data.genres)
-        .then( fetch(url)
+        .then(fetch(url)
             .then(response => {return response.json()})
-            .then(data => {this.setState(({filmData, isFetching})=>{
-              return {
-                filmData: data.results,
-                isFetching: false
-              }
-            })
-            }))
-
+            .then(data => {this.setState(({filmData, isFetching})=>{return {filmData: data.results,isFetching: false}})}))
   }
   componentDidUpdate(nextProps, nextState, nextContext) {
     if(this.state.isFetching){
@@ -572,15 +444,7 @@ export default class App extends Component {
 
 
   render() {
-
-    let selectedFilm = {}
-    if(this.state.page == 'changeFilm' || this.state.page == 'filmInfo'){
-      selectedFilm = this.state.filmData.filter(el => el.id == this.state.selectFilmId)[0]
-    }
-
-
-    return (
-        <div className="container">
+    return (<div className="container">
           <Header username={this.state.userName} statusHandler={this.statusHandler} role={this.state.role}/>
           {this.state.page == 'main' ? <Homepage filmData={this.state.filmData}
                                                  role={this.state.role}
@@ -593,9 +457,6 @@ export default class App extends Component {
                                                  openFilmInfo={this.openFilmInfo}
                                                  changePanginationPage={this.changePanginationPage}
                                                  changeFilter={this.changeFilter}/> : ''}
-
-
-
           {this.state.page == 'addFilm' ? <AddFilm title={this.state.inputs.title}
                                                    description={this.state.inputs.description}
                                                    pathImage={this.state.inputs.pathImage}
@@ -611,7 +472,7 @@ export default class App extends Component {
                                                    adultInputChange={this.adultInputChange}
                                                    changeInput={this.changeInput}/>: ''}
 
-          {this.state.page == 'filmInfo' ? <FilmInfo selectedFilm={selectedFilm}
+          {this.state.page == 'filmInfo' ? <FilmInfo selectedFilm={this.state.filmData.filter(el => el.id == this.state.selectFilmId)[0]}
                                                      genres={this.state.genres}
                                                      role={this.state.role}
                                                      changeFilm={this.changeFilm}
@@ -647,11 +508,7 @@ export default class App extends Component {
                                                              email={this.state.inputs.email}
                                                              warning={this.state.warning}
                                                              changeInput={this.changeInput}
-                                                             validateInputs={this.validateInputs} /> : ''}
-
-
-        </div>
-    );
+                                                             validateInputs={this.validateInputs} /> : ''} </div>);
   }
 }
 /*
