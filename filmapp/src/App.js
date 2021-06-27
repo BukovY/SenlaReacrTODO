@@ -708,17 +708,17 @@ export default class App extends Component {
     this.state.inputs.description.valid = true
     this.state.inputs.pathImage.value = film.poster_path
     this.state.inputs.pathImage.valid = true
-    this.state.inputs.popularity.value = Number(film.popularity)
+    this.state.inputs.popularity.value = String(film.popularity)
     this.state.inputs.popularity.valid = true
     this.state.inputs.realiseDate.value = film.release_date
     this.state.inputs.realiseDate.valid = true
     this.state.inputs.genres.value = film.genre_ids
     this.state.inputs.genres.valid = true
-    this.state.inputs.averageVote.value = Number(film.vote_average)
+    this.state.inputs.averageVote.value = String(film.vote_average)
     this.state.inputs.averageVote.valid = true
-    this.state.inputs.voteCount.value = Number(film.vote_count)
+    this.state.inputs.voteCount.value = String(film.vote_count)
     this.state.inputs.voteCount.valid = true
-    this.state.inputs.isAdult.value = Number(film.adult)
+    this.state.inputs.isAdult.value = String(film.adult)
     this.state.inputs.isAdult.valid = true
     this.setState(({page, selectFilmId})=>{
       return {
