@@ -156,7 +156,7 @@ export default class App extends Component {
         }
       },
       isAdult: {
-        value: '',
+        value: true,
         valid: true,
         validateFunc: () => {
         }
@@ -918,6 +918,18 @@ export default class App extends Component {
   }
 
 
+  // add func
+  adultInputChange = (el) => { // need inverse el
+    let inputsNew = this.state.inputs
+    inputsNew.isAdult.value = !el
+    this.setState(({inputs})=>{
+      return {
+        inputs: inputsNew
+      }
+    })
+  }
+
+
 
 
   componentDidMount() {
@@ -993,7 +1005,9 @@ export default class App extends Component {
                                                    averageVote={this.state.inputs.averageVote}
                                                    voteCount={this.state.inputs.voteCount}
                                                    isAdult={this.state.inputs.isAdult}
-                                                   genresMap={this.state.genres}/>: ''}
+                                                   genresMap={this.state.genres}
+                                                   adultInputChange={this.adultInputChange}
+                                                   changeInput={this.changeInput}/>: ''}
           {this.state.page == 'filmInfo' ? <FilmInfo selectedFilm={selectedFilm}
                                                      genres={this.state.genres}
                                                      role={this.state.role}
