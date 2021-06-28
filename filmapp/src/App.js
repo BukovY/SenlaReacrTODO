@@ -6,8 +6,7 @@ import FilmInfo from "./component/Main/FilmInfo";
 import ChangeFilm from "./component/Main/ChangeFilm";
 import Sign from "./component/Main/Sign";
 import Registration from "./component/Main/Registration";
-
-
+import users from '../src/dummy_data/users'
 export default class App extends Component {
   state = {
     page: 'main',
@@ -163,8 +162,7 @@ export default class App extends Component {
       },
     },
     warning: '',
-    users: [{ name: "admin", password: "533533", role: "admin", email: 'admin@mail.ru' },
-      { name: "John", password: "533533", role: "user", email: 'user@mail.ru' }],
+    users: users,
     isFetching: true,
     genres: [],
     filmData: [],
@@ -173,25 +171,13 @@ export default class App extends Component {
   statusHandler =(action)=>{
     switch (action) {
       case 'mainLogOut':
-        this.setState(({userName, page, role, selectPage, selectedFilter})=>{
-          return {
-            userName: '',
-            page: 'main',
-            role: 'def',
-            selectPage: 1,
-            selectedFilter: 'Без фильтра'
-          }
-        })
+        this.setState(({})=>{return {userName: '', page: 'main', role: 'def', selectPage: 1, selectedFilter: 'Без фильтра'}})
         break;
       case 'sign':
-        this.setState(({page})=>{
-          return {
-            page: 'sign',
-          }
-        })
+        this.setState(({})=>{return {page: 'sign',}})
         break;
       case 'registration':
-        this.setState(({page})=>{return{page: 'registration'}})
+        this.setState(({})=>{return{page: 'registration'}})
         break;
       case 'main':
         this.state.isFetching = true
