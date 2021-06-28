@@ -14,8 +14,8 @@ const Card = ({el, changeFilm, role, deliteFilm, openFilmInfo}) => {
             <p>{el.original_title}</p>
             <img src={link}/>
             <p>{el.vote_average} / {el.release_date}</p>
-            {role == 'admin' ? <button onClick={() => changeFilm(el.id)}>Change film</button> : ''}
-            {role == 'admin' ? <button onClick={() => deliteFilm(el.id)}>Delite film</button> : ''}
+            {role == 'admin' ? <button className='actionButton' onClick={() => changeFilm(el.id)}>Change film</button> : ''}
+            {role == 'admin' ? <button className='actionButton' onClick={() => deliteFilm(el.id)}>Delite film</button> : ''}
         </div>
     </>)
 };

@@ -20,19 +20,23 @@ const FilmInfo = ({selectedFilm, role, changeFilm, deliteFilm, genres, changeInp
     return (
         <div className='main'>
             <h1>Информация о фильме</h1>
-            <img src={link}/>
-            {role == 'admin' ? <button onClick={() => changeFilm(selectedFilm.id)}>Change</button> : ''}
-            {role == 'admin' ? <button onClick={() => deliteFilm(selectedFilm.id)}>Delite</button> : ''}
-            <p>Title: {selectedFilm.title}</p>
-            <p>Overview: {selectedFilm.overview}</p>
-            <p>Genres: {genresRender.map(el => el + ' ')}</p>
-            <p>Popularity: {selectedFilm.popularity}</p>
-            <p>Release date: {selectedFilm.release_date}</p>
-            <p>Vote average: {selectedFilm.vote_average}</p>
-            <p>Vote count: {selectedFilm.vote_count}</p>
-            {role == 'user' ? <input className={userVote.valid ? '':'inputError'} onChange={(ev) => changeInput('userVote', ev.target.value)} value={userVote.value}/> : ''}
-            {role === 'user' && !userVote.valid? 'Оценка некорректная, пожалуйста смените оценку' : ''}
-            {role == 'user' ? <button onClick={() => validateInputs('changeVote','userVote')}>Vote</button> : ''}
+            <div className='flex'>
+                <div><img src={link} width='100%' height='auto'/>
+                    {role == 'admin' ? <button className='actionButton' onClick={() => changeFilm(selectedFilm.id)}>Change</button> : ''}
+                    {role == 'admin' ? <button className='actionButton' onClick={() => deliteFilm(selectedFilm.id)}>Delite</button> : ''}
+                </div>
+                <div><p>Title: {selectedFilm.title}</p>
+                    <p>Overview: {selectedFilm.overview}</p>
+                    <p>Genres: {genresRender.map(el => el + ' ')}</p>
+                    <p>Popularity: {selectedFilm.popularity}</p>
+                    <p>Release date: {selectedFilm.release_date}</p>
+                    <p>Vote average: {selectedFilm.vote_average}</p>
+                    <p>Vote count: {selectedFilm.vote_count}</p>
+                    {role == 'user' ? <input className={userVote.valid ? '':'inputError'} onChange={(ev) => changeInput('userVote', ev.target.value)} value={userVote.value}/> : ''}
+                    {role === 'user' && !userVote.valid? 'Оценка некорректная, пожалуйста смените оценку' : ''}
+                    {role == 'user' ? <button onClick={() => validateInputs('changeVote','userVote')}>Vote</button> : ''}</div>
+            </div>
+
         </div>
     );
 };

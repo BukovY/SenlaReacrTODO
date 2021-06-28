@@ -1,5 +1,5 @@
 import React from 'react';
-const Pangination = ({selectPage, changePanginationPage, maxPanginationPage}) => {
+const Pangination = ({selectPage, changePanginationPage, maxPanginationPage, isFetching}) => {
     let panginationItems = [];
 
     if (selectPage == 1) {
@@ -15,8 +15,9 @@ const Pangination = ({selectPage, changePanginationPage, maxPanginationPage}) =>
     }
 
     return (
-        <div className='main'>
-            {panginationItems.map(el => <button key={el[1]} className={el[1] == selectPage ? 'panginationActive' : 'panginationDef'} onClick={() => changePanginationPage(el[1])}>{el[0]}</button>)}
+        <div id='panginationDiv'>
+            {isFetching? '' : panginationItems.map(el => <button key={el[1]} className={el[1] == selectPage ? 'panginationActive' : 'panginationDef'} onClick={() => changePanginationPage(el[1])}>{el[0]}</button>)}
+
         </div>
     );
 };
