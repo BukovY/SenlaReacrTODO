@@ -11,7 +11,7 @@ import users from '../src/dummy_data/users'
 
 export default class App extends Component {
     state = {
-        page: '404',
+        page: 'main',
         apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
         maxPage: 15,
         selectedFilter: 'Без фильтра',
@@ -168,6 +168,8 @@ export default class App extends Component {
         isFetching: true,
         genres: [],
         filmData: [],
+        myFilmAdd: [],
+        delIds:[]
     };
 
     statusHandler = (action) => {
@@ -224,8 +226,7 @@ export default class App extends Component {
         }
     }
     changeFilm = (id) => {
-        // записать параметры фильмы в инпуты
-        let film = this.state.filmData.filter(el => el.id == id)[0]
+        let film = [...this.state.myFilmAdd, ...this.state.filmData].filter(el => el.id == id)[0]
         this.state.inputs.title.value = film.original_title
         this.state.inputs.title.valid = true
         this.state.inputs.description.value = film.overview
@@ -250,7 +251,7 @@ export default class App extends Component {
     }
     deliteFilm = (id) => {
         this.setState(({}) => {
-            return {filmData: this.state.filmData.filter(el => el.id != id), page: 'main'}
+            return {delIds: [...this.state.delIds, id], page: 'main'}
         })
     }
     openFilmInfo = (id, tagName) => {
@@ -392,9 +393,32 @@ export default class App extends Component {
                     }
                 }
                 if (addFilmAllValid) {
-                    alert('all valid go to DB')
+                    let obg={
+                        title:this.state.inputs.title.value,
+                        original_title: this.state.inputs.title.value,
+                        overview:this.state.inputs.description.value,
+                        poster_path: this.state.inputs.pathImage.value,
+                        popularity: this.state.inputs.popularity.value,
+                        release_date: this.state.inputs.realiseDate.value,
+                        genre_ids: [...this.state.inputs.genres.value],
+                        vote_average:this.state.inputs.averageVote.value,
+                        vote_count:this.state.inputs.voteCount.value,
+                        adult:this.state.inputs.isAdult.value,
+                        id: parseInt(Math.random()*100000)
+                    }
+                    for (let i of arg) {
+                        if (i != 'genres') {
+                            this.state.inputs[i].value = ''
+                            this.state.inputs[i].valid = true
+                        } else {
+                            this.state.inputs[i].value = []
+                            this.state.inputs[i].valid = true
+                        }
+                    }
+                    this.state.myFilmAdd.push(obg)
+                    console.log(this.state.myFilmAdd)
                     this.setState(({}) => {
-                        return {}
+                        return {myFilmAdd: this.state.myFilmAdd}
                     })
                 }
                 break
@@ -416,7 +440,6 @@ export default class App extends Component {
             return {selectedFilter: item, isFetching: true}
         })
     }
-
     updateData = () => {
         let filter;
         switch (this.state.selectedFilter) {
@@ -467,7 +490,6 @@ export default class App extends Component {
             return {inputs: inputs}
         })
     }
-
     componentDidMount() {
         let filter1;
         switch (this.state.selectedFilter) {
@@ -506,20 +528,38 @@ export default class App extends Component {
                     })
                 }))
     }
-
     componentDidUpdate(nextProps, nextState, nextContext) {
         if (this.state.isFetching) {
             this.updateData()
         }
     }
-
-
     render() {
+        let filmToRender = []
+        let remainingFilm = this.state.filmData.filter(el => this.state.delIds.indexOf(el.id) == -1)
+        if(this.state.page === 'main' && this.state.selectedFilter === 'Без фильтра' && this.state.myFilmAdd.length > 0 && this.state.selectPage === 1){
+            let counter = 0;
+            for(let i of this.state.myFilmAdd){
+                if(counter < 20){
+                    filmToRender.push(i)
+                    counter++
+                }
+            }
+            for(let i of remainingFilm){
+                if(counter < 20){
+                    filmToRender.push(i)
+                    counter++
+                }
+            }
+        } else {
+            filmToRender = remainingFilm
+        }
+
         return (<div className="container">
             <Header username={this.state.userName} statusHandler={this.statusHandler} role={this.state.role}
                     page={this.state.page}/>
             {this.state.page === '404' ? <NotFound statusHandler={this.statusHandler}/> : ''}
-            {this.state.page === 'main' ? <Homepage filmData={this.state.filmData}
+            {this.state.page === 'main' ? <Homepage filmData={filmToRender}
+                                                    addFilm={this.state.myFilmAdd}
                                                     role={this.state.role}
                                                     selectPage={this.state.selectPage}
                                                     maxPanginationPage={this.state.maxPage}
@@ -547,7 +587,7 @@ export default class App extends Component {
                                                       changeInput={this.changeInput}/> : ''}
 
             {this.state.page === 'filmInfo' ?
-                <FilmInfo selectedFilm={this.state.filmData.filter(el => el.id == this.state.selectFilmId)[0]}
+                <FilmInfo selectedFilm={filmToRender.filter(el => el.id == this.state.selectFilmId)[0]}
                           genres={this.state.genres}
                           role={this.state.role}
                           changeFilm={this.changeFilm}

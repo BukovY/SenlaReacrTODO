@@ -1,5 +1,4 @@
 import React from 'react';
-//{[title, description,pathImage,popularity, realiseDate].map(el => <></>)}
 const AddFilm = ({title, description, pathImage, popularity, realiseDate, genres, averageVote, voteCount, isAdult, genresMap, changeInput, adultInputChange, validateInputs, genresInputChange}) => {
     return (
         <div className='main'>
