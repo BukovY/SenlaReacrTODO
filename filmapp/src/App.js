@@ -57,7 +57,7 @@ export default class App extends Component {
         valid: true,
         validateFunc: () => {
           let input = this.state.inputs.name
-          input.valid = input.value.match(/^[A-Za-zА-Яа-яЁё\s]+$/)
+          input.valid = (input.value.match(/^[A-Za-zА-Яа-яЁё\s]+$/) && input.value.length > 5)
         }
       },
       surname:{
@@ -65,7 +65,7 @@ export default class App extends Component {
         valid: true,
         validateFunc: () => {
           let input = this.state.inputs.surname
-          input.valid = input.value.match(/^[A-Za-zА-Яа-яЁё\s]+$/)
+          input.valid = (input.value.match(/^[A-Za-zА-Яа-яЁё\s]+$/) && input.value.length > 5)
         }
       },
       repeatPassword:{
@@ -84,7 +84,7 @@ export default class App extends Component {
         valid: true,
         validateFunc: () => {
           let input = this.state.inputs.title
-          input.valid = input.value.length > 6
+          input.valid = input.value.length > 3
         }
       },
       description: {
@@ -92,7 +92,7 @@ export default class App extends Component {
         valid: true,
         validateFunc: () => {
           let input = this.state.inputs.description
-          input.valid = input.value.length > 6
+          input.valid = (input.value.length > 6 && input.value.length < 150)
         }
       },
       pathImage: {
@@ -136,11 +136,10 @@ export default class App extends Component {
         valid: true,
         validateFunc: () => {
           let input = this.state.inputs.averageVote
-
-          if(input.value > 0 && input.value < 11){
-            this.state.inputs.averageVote.valid = true
+          if(input.value.indexOf('.') == -1 && input.value.indexOf(',') == -1 && input.value > 0 && input.value < 500000){
+            input.valid = true
           } else {
-            this.state.inputs.averageVote.valid = false
+            input.valid = false
           }
         }
       },
@@ -447,7 +446,7 @@ export default class App extends Component {
   render() {
     return (<div className="container">
           <Header username={this.state.userName} statusHandler={this.statusHandler} role={this.state.role}/>
-          {this.state.page == 'main' ? <Homepage filmData={this.state.filmData}
+          {this.state.page === 'main' ? <Homepage filmData={this.state.filmData}
                                                  role={this.state.role}
                                                  selectPage={this.state.selectPage}
                                                  maxPanginationPage={this.state.maxPage}
@@ -458,7 +457,7 @@ export default class App extends Component {
                                                  openFilmInfo={this.openFilmInfo}
                                                  changePanginationPage={this.changePanginationPage}
                                                  changeFilter={this.changeFilter}/> : ''}
-          {this.state.page == 'addFilm' ? <AddFilm title={this.state.inputs.title}
+          {this.state.page === 'addFilm' ? <AddFilm title={this.state.inputs.title}
                                                    description={this.state.inputs.description}
                                                    pathImage={this.state.inputs.pathImage}
                                                    popularity={this.state.inputs.popularity}
@@ -473,7 +472,7 @@ export default class App extends Component {
                                                    adultInputChange={this.adultInputChange}
                                                    changeInput={this.changeInput}/>: ''}
 
-          {this.state.page == 'filmInfo' ? <FilmInfo selectedFilm={this.state.filmData.filter(el => el.id == this.state.selectFilmId)[0]}
+          {this.state.page === 'filmInfo' ? <FilmInfo selectedFilm={this.state.filmData.filter(el => el.id == this.state.selectFilmId)[0]}
                                                      genres={this.state.genres}
                                                      role={this.state.role}
                                                      changeFilm={this.changeFilm}
@@ -481,7 +480,7 @@ export default class App extends Component {
                                                      changeInput={this.changeInput}
                                                      userVote={this.state.inputs.userVote}
                                                      validateInputs={this.validateInputs}/> : ''}
-          {this.state.page == 'changeFilm' ? <ChangeFilm title={this.state.inputs.title}
+          {this.state.page === 'changeFilm' ? <ChangeFilm title={this.state.inputs.title}
                                                          id={this.state.selectFilmId}
                                                          description={this.state.inputs.description}
                                                          pathImage={this.state.inputs.pathImage}
@@ -496,13 +495,13 @@ export default class App extends Component {
                                                          validateInputs={this.validateInputs}
                                                          adultInputChange={this.adultInputChange}
                                                          changeInput={this.changeInput}/> : ''}
-          {this.state.page == 'sign' ? <Sign statusHandler={this.statusHandler}
+          {this.state.page === 'sign' ? <Sign statusHandler={this.statusHandler}
                                              email={this.state.inputs.email}
                                              password={this.state.inputs.password}
                                              warning={this.state.warning}
                                              changeInput={this.changeInput}
                                              validateInputs={this.validateInputs}/> : ''}
-          {this.state.page == 'registration' ? <Registration name={this.state.inputs.name}
+          {this.state.page === 'registration' ? <Registration name={this.state.inputs.name}
                                                              surname={this.state.inputs.surname}
                                                              password={this.state.inputs.password}
                                                              repeatPassword={this.state.inputs.repeatPassword}
