@@ -2,11 +2,11 @@ import React from 'react';
 import Filter from "./Films/Filter";
 import Pangination from "./Films/Pangination";
 import Cards from "./Films/Cards";
-const Homepage = ({filmData, role, statusHandler, changeFilm, deliteFilm, openFilmInfo, selectPage, changePanginationPage, maxPanginationPage, changeFilter, isFetching}) => {
+const Homepage = ({filmData, role, statusHandler, changeFilm, deliteFilm, openFilmInfo, selectPage, changePanginationPage, maxPanginationPage, changeFilter, isFetching, selectedFilfer}) => {
     return (
         <div className='main'>
             <div className='flex'>
-                <Filter changeFilter={changeFilter}/>
+                <Filter changeFilter={changeFilter} selectedFilfer={selectedFilfer}/>
                 {role == 'admin' ? <button onClick={() => statusHandler('addFilm')}>Add film</button> : ''}
             </div>
             {isFetching ? <div className="loader"></div> : <Cards filmData={filmData} changeFilm={changeFilm} role={role} deliteFilm={deliteFilm} openFilmInfo={openFilmInfo}/>}
