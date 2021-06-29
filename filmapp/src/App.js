@@ -514,9 +514,7 @@ export default class App extends Component {
         let url = `https://api.themoviedb.org/3/discover/movie?api_key=${this.state.apiKey}&language=en-US&sort_by=${filter1}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
         let genresUrl = `https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${this.state.apiKey}`
         fetch(genresUrl)
-            .then(response => {
-                return response.json()
-            })
+            .then(response => {return response.json()})
             .then(data => this.state.genres = data.genres)
             .then(fetch(url)
                 .then(response => {

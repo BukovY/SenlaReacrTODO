@@ -3,10 +3,13 @@ const AddFilm = ({title, description, pathImage, popularity, realiseDate, genres
     return (
         <div className='main'>
             <h1>AddFilm</h1>
-            {[[title, 'title'], [description, 'description'], [pathImage, 'pathImage'], [popularity, 'popularity'], [realiseDate, 'realiseDate'], [averageVote, 'averageVote'], [voteCount, 'voteCount']].map(el => <>
+            {[[title, 'title'], [description, 'description'], [pathImage, 'pathImage'], [popularity, 'popularity'],  [averageVote, 'averageVote'], [voteCount, 'voteCount']].map(el => <>
                 <input placeholder={el[1]} className={el[0].valid ? '' : 'inputError'}
                        onChange={(ev) => changeInput(el[1], ev.target.value)} value={el[0].value}/>
                 {el[0].valid ? '' : `Incorrect ${el[1]}`}</>)}
+            <input type="date" placeholder={'realiseDate'} className={realiseDate.valid ? '' : 'inputError'}
+                   onChange={(ev) => changeInput('realiseDate', ev.target.value)} value={realiseDate.value}/>
+            {realiseDate.valid ? '' : `Incorrect realiseDate`}
             <div className={genres.valid ? '' : 'inputError'}>
                 {genresMap.map(el => <label><input type="checkbox"
                                                    checked={genres.value.indexOf(el.id) != -1 ? 'checked' : ''}
