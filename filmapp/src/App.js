@@ -11,7 +11,7 @@ import users from '../src/dummy_data/users'
 
 export default class App extends Component {
     state = {
-        page: 'main',
+        page: 'notConnect',
         apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
         maxPage: 15,
         selectedFilter: 'Без фильтра',
@@ -169,7 +169,8 @@ export default class App extends Component {
         genres: [],
         filmData: [],
         myFilmAdd: [],
-        delIds:[]
+        delIds:[],
+        isConnect: true,
     };
 
     statusHandler = (action) => {
@@ -471,6 +472,9 @@ export default class App extends Component {
                     return {filmData: data.results, isFetching: false}
                 })
             })
+            .catch(err => this.setState(({}) => {
+                return {page: 'notConnect'}
+            }))
     }
     adultInputChange = (el) => { // need inverse el
         let inputsNew = this.state.inputs
@@ -515,6 +519,7 @@ export default class App extends Component {
         let genresUrl = `https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${this.state.apiKey}`
         fetch(genresUrl)
             .then(response => {return response.json()})
+
             .then(data => this.state.genres = data.genres)
             .then(fetch(url)
                 .then(response => {
@@ -522,7 +527,7 @@ export default class App extends Component {
                 })
                 .then(data => {
                     this.setState(({filmData, isFetching}) => {
-                        return {filmData: data.results, isFetching: false}
+                        return {filmData: data.results, isFetching: false, page: 'main'}
                     })
                 }))
     }
@@ -553,8 +558,9 @@ export default class App extends Component {
         }
 
         return (<div className="container">
-            <Header username={this.state.userName} statusHandler={this.statusHandler} role={this.state.role}
-                    page={this.state.page}/>
+            {this.state.page === 'notConnect' ? `Нет сети подключитесь и перезагрузите страницу`: ''}
+            {this.state.page !== 'notConnect' ? <Header username={this.state.userName} statusHandler={this.statusHandler} role={this.state.role}
+                                                        page={this.state.page}/>: ''}
             {this.state.page === '404' ? <NotFound statusHandler={this.statusHandler}/> : ''}
             {this.state.page === 'main' ? <Homepage filmData={filmToRender}
                                                     addFilm={this.state.myFilmAdd}
