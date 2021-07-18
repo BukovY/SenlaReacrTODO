@@ -1,12 +1,15 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const Header = ({username, statusHandler, role, page}) => {
     return (
         <header>
-            <button onClick={() => statusHandler('main')}>Home</button>
+            <Link to='/' onClick={() => statusHandler('main')}>Home</Link>
             <div className='flex'>
                 {role == 'admin' ? <p>admin</p> : <p>{username}</p>}
-                {username == '' ? <button onClick={() => statusHandler('sign')}> Sign in</button> : page === 'addFilm' ? <button onClick={() => statusHandler('addFilmAdminLogout')}> Log out</button> : <button onClick={() => statusHandler('mainLogOut')}> Log out</button>}
+                {username == '' ? <Link to='/sign' onClick={() => statusHandler('sign')}> Sign in</Link> :
+                    page === 'addFilm' ? <Link to='/' onClick={() => statusHandler('addFilmAdminLogout')}> Log out</Link> :
+                        <Link to='/' onClick={() => statusHandler('mainLogOut')}> Log out</Link>}
             </div>
         </header>
     );

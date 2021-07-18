@@ -1,29 +1,36 @@
 import React from 'react';
 import placeholder from '../../img/placeholderFilm.jpg'
+import {Link, useParams} from "react-router-dom";
 
 const FilmInfo = ({selectedFilm, role, changeFilm, deliteFilm, genres, changeInput, userVote, validateInputs}) => {
 
-    let link
-    if(selectedFilm.backdrop_path != null){
-        link = 'https://image.tmdb.org/t/p/w500/' + selectedFilm.backdrop_path
-    } else {
-        link = placeholder
-    }
-
+    const {id} = useParams();
+    let isAvalible = selectedFilm?.id != undefined && selectedFilm.id == id
+    console.log(isAvalible)
+    let link = '';
     let genresRender = [];
-    for (let i of genres) {
-        if (selectedFilm.genre_ids.indexOf(i.id) != -1) {
-            genresRender.push(i.name)
+    if(isAvalible == true){
+        if(selectedFilm.backdrop_path != null){
+            link = 'https://image.tmdb.org/t/p/w500/' + selectedFilm.backdrop_path
+        } else {
+            link = placeholder
+        }
+        for (let i of genres) {
+            if (selectedFilm.genre_ids.indexOf(i.id) != -1) {
+                genresRender.push(i.name)
+            }
         }
     }
 
+
+
     return (
-        <div className='main'>
+        isAvalible ? (<div className='main'>
             <h1>Информация о фильме</h1>
             <div className='flex'>
                 <div><img src={link} width='100%' height='auto'/>
-                    {role == 'admin' ? <button className='actionButton' onClick={() => changeFilm(selectedFilm.id)}>Change</button> : ''}
-                    {role == 'admin' ? <button className='actionButton' onClick={() => deliteFilm(selectedFilm.id)}>Delite</button> : ''}
+                    {role == 'admin' ? <Link to={`/changefilm/${selectedFilm.id}`} className='actionButton' onClick={() => changeFilm(selectedFilm.id)}>Change</Link> : ''}
+                    {role == 'admin' ? <Link to='/' className='actionButton' onClick={() => deliteFilm(selectedFilm.id)}>Delite</Link> : ''}
                 </div>
                 <div><p>Title: {selectedFilm.title}</p>
                     <p>Overview: {selectedFilm.overview}</p>
@@ -36,8 +43,9 @@ const FilmInfo = ({selectedFilm, role, changeFilm, deliteFilm, genres, changeInp
                     {role === 'user' && !userVote.valid? 'Оценка некорректная, пожалуйста смените оценку' : ''}
                     {role == 'user' ? <button onClick={() => validateInputs('changeVote','userVote')}>Vote</button> : ''}</div>
             </div>
+        </div>) : (<p>Даного фильма нет, перейдите пожалуйста с главной</p>)
 
-        </div>
+
     );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import placeholder from '../../../img/placeholderFilm.jpg'
+import {Link} from 'react-router-dom'
 
 const Card = ({el, changeFilm, role, deliteFilm, openFilmInfo}) => {
     let link
@@ -10,11 +11,13 @@ const Card = ({el, changeFilm, role, deliteFilm, openFilmInfo}) => {
     }
 
     return(<>
-        <div className="cardFilm"  onClick={(ev) => openFilmInfo(el.id, ev.target.tagName)}>
-            <p>{el.original_title}</p>
+        <div className="cardFilm"  >
+            <p >{el.original_title}</p>
+            <Link  to={`/filminfo/${el.id}`} onClick={(ev) => openFilmInfo(el.id, ev.target.tagName)}>
             <img src={link}/>
+            </Link>
             <p>{el.vote_average} / {el.release_date}</p>
-            {role == 'admin' ? <button className='actionButton' onClick={() => changeFilm(el.id)}>Change film</button> : ''}
+            {role == 'admin' ? <Link to={`/changefilm/${el.id}`} className='actionButton' onClick={() => changeFilm(el.id)}>Change film</Link> : ''}
             {role == 'admin' ? <button className='actionButton' onClick={() => deliteFilm(el.id)}>Delite film</button> : ''}
         </div>
     </>)

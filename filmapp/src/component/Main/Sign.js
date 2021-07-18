@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const Sign = ({statusHandler, email, password, changeInput, validateInputs, warning}) => {
     return (
@@ -9,7 +10,7 @@ const Sign = ({statusHandler, email, password, changeInput, validateInputs, warn
             {password.valid ? '' : 'Некорректный password'}
             {warning.length > 0 ? warning : ''}
             <button onClick={() => validateInputs('signIn', 'email', 'password')}>Sign UP</button>
-            <button onClick={() => statusHandler('registration')}>Register</button>
+            <Link to='/register' onClick={() => statusHandler('registration')}>Register</Link>
         </div>
     );
 };

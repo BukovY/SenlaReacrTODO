@@ -8,6 +8,7 @@ import Sign from "./component/Main/Sign";
 import Registration from "./component/Main/Registration";
 import NotFound from "./component/Main/NotFound";
 import users from '../src/dummy_data/users'
+import {Route, Switch } from "react-router-dom";
 
 export default class App extends Component {
     state = {
@@ -15,8 +16,8 @@ export default class App extends Component {
         apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
         maxPage: 15,
         selectedFilter: 'Без фильтра',
-        role: 'def',
-        userName: '',
+        role: 'admin',
+        userName: 'admin',
         selectPage: 1,
         selectFilmId: 0,
         inputs: {
@@ -561,73 +562,92 @@ export default class App extends Component {
             {this.state.page === 'notConnect' ? `Нет сети подключитесь и перезагрузите страницу`: ''}
             {this.state.page !== 'notConnect' ? <Header username={this.state.userName} statusHandler={this.statusHandler} role={this.state.role}
                                                         page={this.state.page}/>: ''}
-            {this.state.page === '404' ? <NotFound statusHandler={this.statusHandler}/> : ''}
-            {this.state.page === 'main' ? <Homepage filmData={filmToRender}
-                                                    addFilm={this.state.myFilmAdd}
-                                                    role={this.state.role}
-                                                    selectPage={this.state.selectPage}
-                                                    maxPanginationPage={this.state.maxPage}
-                                                    isFetching={this.state.isFetching}
-                                                    selectedFilfer={this.state.selectedFilter}
-                                                    statusHandler={this.statusHandler}
-                                                    changeFilm={this.changeFilm}
-                                                    deliteFilm={this.deliteFilm}
-                                                    openFilmInfo={this.openFilmInfo}
-                                                    changePanginationPage={this.changePanginationPage}
-                                                    changeFilter={this.changeFilter}/> : ''}
-            {this.state.page === 'addFilm' ? <AddFilm title={this.state.inputs.title}
-                                                      description={this.state.inputs.description}
-                                                      pathImage={this.state.inputs.pathImage}
-                                                      popularity={this.state.inputs.popularity}
-                                                      realiseDate={this.state.inputs.realiseDate}
-                                                      genres={this.state.inputs.genres}
-                                                      averageVote={this.state.inputs.averageVote}
-                                                      voteCount={this.state.inputs.voteCount}
-                                                      isAdult={this.state.inputs.isAdult}
-                                                      genresMap={this.state.genres}
-                                                      genresInputChange={this.genresInputChange}
-                                                      validateInputs={this.validateInputs}
-                                                      adultInputChange={this.adultInputChange}
-                                                      changeInput={this.changeInput}/> : ''}
+            <Switch>
+                <Route path='/' exact>
+                    <Homepage filmData={filmToRender}
+                                                            addFilm={this.state.myFilmAdd}
+                                                            role={this.state.role}
+                                                            selectPage={this.state.selectPage}
+                                                            maxPanginationPage={this.state.maxPage}
+                                                            isFetching={this.state.isFetching}
+                                                            selectedFilfer={this.state.selectedFilter}
+                                                            statusHandler={this.statusHandler}
+                                                            changeFilm={this.changeFilm}
+                                                            deliteFilm={this.deliteFilm}
+                                                            openFilmInfo={this.openFilmInfo}
+                                                            changePanginationPage={this.changePanginationPage}
+                                                            changeFilter={this.changeFilter}/>
+                </Route>
+                <Route path='/addfilm'>
+                    <AddFilm title={this.state.inputs.title}
+                                                              description={this.state.inputs.description}
+                                                              pathImage={this.state.inputs.pathImage}
+                                                              popularity={this.state.inputs.popularity}
+                                                              realiseDate={this.state.inputs.realiseDate}
+                                                              genres={this.state.inputs.genres}
+                                                              averageVote={this.state.inputs.averageVote}
+                                                              voteCount={this.state.inputs.voteCount}
+                                                              isAdult={this.state.inputs.isAdult}
+                                                              genresMap={this.state.genres}
+                                                              genresInputChange={this.genresInputChange}
+                                                              validateInputs={this.validateInputs}
+                                                              adultInputChange={this.adultInputChange}
+                                                              changeInput={this.changeInput}/>
 
-            {this.state.page === 'filmInfo' ?
-                <FilmInfo selectedFilm={filmToRender.filter(el => el.id == this.state.selectFilmId)[0]}
-                          genres={this.state.genres}
-                          role={this.state.role}
-                          changeFilm={this.changeFilm}
-                          deliteFilm={this.deliteFilm}
-                          changeInput={this.changeInput}
-                          userVote={this.state.inputs.userVote}
-                          validateInputs={this.validateInputs}/> : ''}
-            {this.state.page === 'changeFilm' ? <ChangeFilm title={this.state.inputs.title}
-                                                            id={this.state.selectFilmId}
-                                                            description={this.state.inputs.description}
-                                                            pathImage={this.state.inputs.pathImage}
-                                                            popularity={this.state.inputs.popularity}
-                                                            realiseDate={this.state.inputs.realiseDate}
-                                                            genres={this.state.inputs.genres}
-                                                            averageVote={this.state.inputs.averageVote}
-                                                            voteCount={this.state.inputs.voteCount}
-                                                            isAdult={this.state.inputs.isAdult}
-                                                            genresMap={this.state.genres}
-                                                            genresInputChange={this.genresInputChange}
-                                                            validateInputs={this.validateInputs}
-                                                            adultInputChange={this.adultInputChange}
-                                                            changeInput={this.changeInput}/> : ''}
-            {this.state.page === 'sign' ? <Sign statusHandler={this.statusHandler}
-                                                email={this.state.inputs.email}
-                                                password={this.state.inputs.password}
-                                                warning={this.state.warning}
-                                                changeInput={this.changeInput}
-                                                validateInputs={this.validateInputs}/> : ''}
-            {this.state.page === 'registration' ? <Registration name={this.state.inputs.name}
-                                                                surname={this.state.inputs.surname}
-                                                                password={this.state.inputs.password}
-                                                                repeatPassword={this.state.inputs.repeatPassword}
-                                                                email={this.state.inputs.email}
-                                                                warning={this.state.warning}
-                                                                changeInput={this.changeInput}
-                                                                validateInputs={this.validateInputs}/> : ''} </div>);
+
+                </Route>
+                <Route path='/filminfo/:id'>
+                    <FilmInfo selectedFilm={filmToRender.filter(el => el.id == this.state.selectFilmId)[0]}
+                                  genres={this.state.genres}
+                                  role={this.state.role}
+                                  changeFilm={this.changeFilm}
+                                  deliteFilm={this.deliteFilm}
+                                  changeInput={this.changeInput}
+                                  userVote={this.state.inputs.userVote}
+                                  validateInputs={this.validateInputs}/>
+                </Route>
+                <Route path='/changefilm/:id'>
+                    <ChangeFilm title={this.state.inputs.title}
+                                                                    idF={this.state.selectFilmId}
+                                                                    description={this.state.inputs.description}
+                                                                    pathImage={this.state.inputs.pathImage}
+                                                                    popularity={this.state.inputs.popularity}
+                                                                    realiseDate={this.state.inputs.realiseDate}
+                                                                    genres={this.state.inputs.genres}
+                                                                    averageVote={this.state.inputs.averageVote}
+                                                                    voteCount={this.state.inputs.voteCount}
+                                                                    isAdult={this.state.inputs.isAdult}
+                                                                    genresMap={this.state.genres}
+                                                                    genresInputChange={this.genresInputChange}
+                                                                    validateInputs={this.validateInputs}
+                                                                    adultInputChange={this.adultInputChange}
+                                                                    changeInput={this.changeInput}/>
+
+                </Route>
+                <Route path='/sign'>
+                    <Sign statusHandler={this.statusHandler}
+                                                        email={this.state.inputs.email}
+                                                        password={this.state.inputs.password}
+                                                        warning={this.state.warning}
+                                                        changeInput={this.changeInput}
+                                                        validateInputs={this.validateInputs}/>
+
+                </Route>
+                <Route path='/register' exact>
+                    <Registration name={this.state.inputs.name}
+                                                                        surname={this.state.inputs.surname}
+                                                                        password={this.state.inputs.password}
+                                                                        repeatPassword={this.state.inputs.repeatPassword}
+                                                                        email={this.state.inputs.email}
+                                                                        warning={this.state.warning}
+                                                                        changeInput={this.changeInput}
+                                                                        validateInputs={this.validateInputs}/>
+                </Route>
+                <Route path='/404'>
+                    <NotFound statusHandler={this.statusHandler}/>
+                </Route>
+            </Switch>
+             </div>);
     }
 }
 /*
