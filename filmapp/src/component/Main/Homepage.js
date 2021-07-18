@@ -12,7 +12,7 @@ const Homepage = ({filmData, role, statusHandler, changeFilm, deliteFilm, openFi
                 {role == 'admin' ? <Link to='/addfilm' onClick={() => statusHandler('addFilm')}>Add film</Link> : ''}
             </div>
             {isFetching ? <div className="loader"></div> : <Cards filmData={filmData} changeFilm={changeFilm} role={role} deliteFilm={deliteFilm} openFilmInfo={openFilmInfo}/>}
-            <Pangination isFetching={isFetching} selectPage={selectPage} changePanginationPage={changePanginationPage} maxPanginationPage={maxPanginationPage}/>
+            <Pangination isFetching={isFetching}/>
         </div>
     );
 };

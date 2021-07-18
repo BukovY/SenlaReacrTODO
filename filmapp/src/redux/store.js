@@ -1,5 +1,0 @@
-// constants
-// actions
-// reducers
-// store
-

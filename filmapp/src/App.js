@@ -1,5 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
+import users from "./dummy_data/users";
 import Header from "./component/Header/Header";
+import {Route, Switch} from "react-router-dom";
 import Homepage from "./component/Main/Homepage";
 import AddFilm from "./component/Main/AddFilm";
 import FilmInfo from "./component/Main/FilmInfo";
@@ -7,8 +9,7 @@ import ChangeFilm from "./component/Main/ChangeFilm";
 import Sign from "./component/Main/Sign";
 import Registration from "./component/Main/Registration";
 import NotFound from "./component/Main/NotFound";
-import users from '../src/dummy_data/users'
-import {Route, Switch } from "react-router-dom";
+import Pangination from "./component/Main/Films/Pangination";
 
 export default class App extends Component {
     state = {
@@ -564,92 +565,87 @@ export default class App extends Component {
                                                         page={this.state.page}/>: ''}
             <Switch>
                 <Route path='/' exact>
+
                     <Homepage filmData={filmToRender}
-                                                            addFilm={this.state.myFilmAdd}
-                                                            role={this.state.role}
-                                                            selectPage={this.state.selectPage}
-                                                            maxPanginationPage={this.state.maxPage}
-                                                            isFetching={this.state.isFetching}
-                                                            selectedFilfer={this.state.selectedFilter}
-                                                            statusHandler={this.statusHandler}
-                                                            changeFilm={this.changeFilm}
-                                                            deliteFilm={this.deliteFilm}
-                                                            openFilmInfo={this.openFilmInfo}
-                                                            changePanginationPage={this.changePanginationPage}
-                                                            changeFilter={this.changeFilter}/>
+                              addFilm={this.state.myFilmAdd}
+                              role={this.state.role}
+                              isFetching={this.state.isFetching}
+                              selectedFilfer={this.state.selectedFilter}
+                              statusHandler={this.statusHandler}
+                              changeFilm={this.changeFilm}
+                              deliteFilm={this.deliteFilm}
+                              openFilmInfo={this.openFilmInfo}
+                              changeFilter={this.changeFilter}/>
                 </Route>
                 <Route path='/addfilm'>
                     <AddFilm title={this.state.inputs.title}
-                                                              description={this.state.inputs.description}
-                                                              pathImage={this.state.inputs.pathImage}
-                                                              popularity={this.state.inputs.popularity}
-                                                              realiseDate={this.state.inputs.realiseDate}
-                                                              genres={this.state.inputs.genres}
-                                                              averageVote={this.state.inputs.averageVote}
-                                                              voteCount={this.state.inputs.voteCount}
-                                                              isAdult={this.state.inputs.isAdult}
-                                                              genresMap={this.state.genres}
-                                                              genresInputChange={this.genresInputChange}
-                                                              validateInputs={this.validateInputs}
-                                                              adultInputChange={this.adultInputChange}
-                                                              changeInput={this.changeInput}/>
+                             description={this.state.inputs.description}
+                             pathImage={this.state.inputs.pathImage}
+                             popularity={this.state.inputs.popularity}
+                             realiseDate={this.state.inputs.realiseDate}
+                             genres={this.state.inputs.genres}
+                             averageVote={this.state.inputs.averageVote}
+                             voteCount={this.state.inputs.voteCount}
+                             isAdult={this.state.inputs.isAdult}
+                             genresMap={this.state.genres}
+                             genresInputChange={this.genresInputChange}
+                             validateInputs={this.validateInputs}
+                             adultInputChange={this.adultInputChange}
+                             changeInput={this.changeInput}/>
 
 
                 </Route>
                 <Route path='/filminfo/:id'>
                     <FilmInfo selectedFilm={filmToRender.filter(el => el.id == this.state.selectFilmId)[0]}
-                                  genres={this.state.genres}
-                                  role={this.state.role}
-                                  changeFilm={this.changeFilm}
-                                  deliteFilm={this.deliteFilm}
-                                  changeInput={this.changeInput}
-                                  userVote={this.state.inputs.userVote}
-                                  validateInputs={this.validateInputs}/>
+                              genres={this.state.genres}
+                              role={this.state.role}
+                              changeFilm={this.changeFilm}
+                              deliteFilm={this.deliteFilm}
+                              changeInput={this.changeInput}
+                              userVote={this.state.inputs.userVote}
+                              validateInputs={this.validateInputs}/>
                 </Route>
                 <Route path='/changefilm/:id'>
                     <ChangeFilm title={this.state.inputs.title}
-                                                                    idF={this.state.selectFilmId}
-                                                                    description={this.state.inputs.description}
-                                                                    pathImage={this.state.inputs.pathImage}
-                                                                    popularity={this.state.inputs.popularity}
-                                                                    realiseDate={this.state.inputs.realiseDate}
-                                                                    genres={this.state.inputs.genres}
-                                                                    averageVote={this.state.inputs.averageVote}
-                                                                    voteCount={this.state.inputs.voteCount}
-                                                                    isAdult={this.state.inputs.isAdult}
-                                                                    genresMap={this.state.genres}
-                                                                    genresInputChange={this.genresInputChange}
-                                                                    validateInputs={this.validateInputs}
-                                                                    adultInputChange={this.adultInputChange}
-                                                                    changeInput={this.changeInput}/>
+                                idF={this.state.selectFilmId}
+                                description={this.state.inputs.description}
+                                pathImage={this.state.inputs.pathImage}
+                                popularity={this.state.inputs.popularity}
+                                realiseDate={this.state.inputs.realiseDate}
+                                genres={this.state.inputs.genres}
+                                averageVote={this.state.inputs.averageVote}
+                                voteCount={this.state.inputs.voteCount}
+                                isAdult={this.state.inputs.isAdult}
+                                genresMap={this.state.genres}
+                                genresInputChange={this.genresInputChange}
+                                validateInputs={this.validateInputs}
+                                adultInputChange={this.adultInputChange}
+                                changeInput={this.changeInput}/>
 
                 </Route>
                 <Route path='/sign'>
                     <Sign statusHandler={this.statusHandler}
-                                                        email={this.state.inputs.email}
-                                                        password={this.state.inputs.password}
-                                                        warning={this.state.warning}
-                                                        changeInput={this.changeInput}
-                                                        validateInputs={this.validateInputs}/>
+                          email={this.state.inputs.email}
+                          password={this.state.inputs.password}
+                          warning={this.state.warning}
+                          changeInput={this.changeInput}
+                          validateInputs={this.validateInputs}/>
 
                 </Route>
                 <Route path='/register' exact>
                     <Registration name={this.state.inputs.name}
-                                                                        surname={this.state.inputs.surname}
-                                                                        password={this.state.inputs.password}
-                                                                        repeatPassword={this.state.inputs.repeatPassword}
-                                                                        email={this.state.inputs.email}
-                                                                        warning={this.state.warning}
-                                                                        changeInput={this.changeInput}
-                                                                        validateInputs={this.validateInputs}/>
+                                  surname={this.state.inputs.surname}
+                                  password={this.state.inputs.password}
+                                  repeatPassword={this.state.inputs.repeatPassword}
+                                  email={this.state.inputs.email}
+                                  warning={this.state.warning}
+                                  changeInput={this.changeInput}
+                                  validateInputs={this.validateInputs}/>
                 </Route>
                 <Route path='/404'>
                     <NotFound statusHandler={this.statusHandler}/>
                 </Route>
             </Switch>
-             </div>);
+        </div>);
     }
 }
-/*
-добиваем стили
- */
