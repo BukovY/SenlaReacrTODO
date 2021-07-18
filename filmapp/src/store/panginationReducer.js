@@ -1,4 +1,10 @@
-import {CHANGE_PAGE} from "./constant";
+const CHANGE_PAGE = 'CHANGE_PAGE'
+
+// actions
+export const changePage = (value) => ({
+    type: CHANGE_PAGE,
+    payload: value
+})
 
 const initialState = {
     maxPage: 15,

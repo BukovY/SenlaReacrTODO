@@ -15,11 +15,9 @@ export default class App extends Component {
     state = {
         page: 'notConnect',
         apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
-        maxPage: 15,
         selectedFilter: 'Без фильтра',
         role: 'admin',
         userName: 'admin',
-        selectPage: 1,
         selectFilmId: 0,
         inputs: {
             userVote: {
@@ -560,12 +558,9 @@ export default class App extends Component {
         }
 
         return (<div className="container">
-            {this.state.page === 'notConnect' ? `Нет сети подключитесь и перезагрузите страницу`: ''}
-            {this.state.page !== 'notConnect' ? <Header username={this.state.userName} statusHandler={this.statusHandler} role={this.state.role}
-                                                        page={this.state.page}/>: ''}
+            <Header />
             <Switch>
                 <Route path='/' exact>
-
                     <Homepage filmData={filmToRender}
                               addFilm={this.state.myFilmAdd}
                               role={this.state.role}
@@ -592,8 +587,6 @@ export default class App extends Component {
                              validateInputs={this.validateInputs}
                              adultInputChange={this.adultInputChange}
                              changeInput={this.changeInput}/>
-
-
                 </Route>
                 <Route path='/filminfo/:id'>
                     <FilmInfo selectedFilm={filmToRender.filter(el => el.id == this.state.selectFilmId)[0]}
@@ -624,23 +617,10 @@ export default class App extends Component {
 
                 </Route>
                 <Route path='/sign'>
-                    <Sign statusHandler={this.statusHandler}
-                          email={this.state.inputs.email}
-                          password={this.state.inputs.password}
-                          warning={this.state.warning}
-                          changeInput={this.changeInput}
-                          validateInputs={this.validateInputs}/>
-
+                    <Sign/>
                 </Route>
-                <Route path='/register' exact>
-                    <Registration name={this.state.inputs.name}
-                                  surname={this.state.inputs.surname}
-                                  password={this.state.inputs.password}
-                                  repeatPassword={this.state.inputs.repeatPassword}
-                                  email={this.state.inputs.email}
-                                  warning={this.state.warning}
-                                  changeInput={this.changeInput}
-                                  validateInputs={this.validateInputs}/>
+                <Route path='/registration' exact>
+                    <Registration/>
                 </Route>
                 <Route path='/404'>
                     <NotFound statusHandler={this.statusHandler}/>

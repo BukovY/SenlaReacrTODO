@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {changePage} from "../../../store/actions";
+import {changePage} from "../../../store/panginationReducer";
 
 const Pangination = ({isFetching}) => {
     let selectPage = useSelector((state) => state.panginationChange.selectPage)

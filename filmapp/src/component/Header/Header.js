@@ -1,15 +1,22 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {roleChange, usernameChange} from "../../store/appReducer";
 
-const Header = ({username, statusHandler, role, page}) => {
+const Header = () => {
+    let username = useSelector((state) => state.appReducer.userName)
+    let role = useSelector((state) => state.appReducer.role)
+    let dispatch = useDispatch()
+    let logout = () => {
+        dispatch(roleChange('def'))
+        dispatch(usernameChange(''))
+    }
     return (
         <header>
-            <Link to='/' onClick={() => statusHandler('main')}>Home</Link>
+            <Link to='/'>Home</Link>
             <div className='flex'>
-                {role == 'admin' ? <p>admin</p> : <p>{username}</p>}
-                {username == '' ? <Link to='/sign' onClick={() => statusHandler('sign')}> Sign in</Link> :
-                    page === 'addFilm' ? <Link to='/' onClick={() => statusHandler('addFilmAdminLogout')}> Log out</Link> :
-                        <Link to='/' onClick={() => statusHandler('mainLogOut')}> Log out</Link>}
+                <p>{username}</p>
+                {role == 'def' ? <Link to='/sign'> Sign in</Link> : <Link to='/' onClick={logout}> Log out</Link>}
             </div>
         </header>
     );

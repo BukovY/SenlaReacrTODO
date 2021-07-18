@@ -1,5 +1,5 @@
 import {createStore, combineReducers} from 'redux'
-import todosReducer from "../../../filmapp/src/store/reducers";
+import todosReducer from "../../../filmapp/src/store/panginationReducer";
 const rootReducers = combineReducers({
     todosReducer
 })
