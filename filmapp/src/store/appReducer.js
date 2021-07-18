@@ -1,52 +1,9 @@
-/*
-state = {
-        page: 'notConnect',
-        apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
-        selectedFilter: 'Без фильтра',
-        ---role: 'admin',
-        ---userName: 'admin',
-        selectFilmId: 0,
-        warning: '',
-        ---users: users,
-        isFetching: true,
-        genres: [],
-        filmData: [],
-        myFilmAdd: [],
-        delIds:[],
-        isConnect: true,
-    };
-    const CHANGE_PAGE = 'CHANGE_PAGE'
-
-export const changePage = (value) => ({
-    type: CHANGE_PAGE,
-    payload: value
-})
-
-const initialState = {
-    maxPage: 15,
-    selectPage: 1
-}
-
-const panginationChange = (state = initialState, action) => {
-    switch (action.type) {
-        case CHANGE_PAGE:
-            return{
-                ...state,
-                selectPage:action.payload
-            };
-        default:
-            return state;
-    }
-}
-
-export default panginationChange
-[{ name: "admin", password: "533533", role: "admin", email: 'admin@mail.ru' },
-    { name: "John", password: "533533", role: "user", email: 'user@mail.ru' }]
- */
 import users from "../dummy_data/users";
 const ROLE_CHANGE = 'ROLE_CHANGE'
 const USERNAME_CHANGE = 'USERNAME_CHANGE'
 const ADD_USER = 'ADD_USER'
+const SET_LOADING = 'SET_LOADING'
+const SET_FILMDATA = 'SET_FILMDATA'
 
 // actions
 export const roleChange = (el) =>({
@@ -61,10 +18,22 @@ export const addUser =(el)=>({
     type: ADD_USER,
     payload: el
 })
+export const setLoading = (el) =>({
+    type: SET_LOADING,
+    payload: el
+})
+export const setFilmData = (el) => ({
+    type:SET_FILMDATA,
+    payload: el
+})
+
 const initialStateApp = {
     role: 'def',
     userName: '',
     users: users,
+    isFetching: true,
+    filmData: [],
+    genges:[]
 }
 
 const appReducer = (state = initialStateApp, action) => {
@@ -83,6 +52,16 @@ const appReducer = (state = initialStateApp, action) => {
             return {
                 ...state,
                 users: [...state.users, action.payload]
+            }
+        case SET_LOADING:
+            return {
+                ...state,
+                isFetching: action.payload
+            }
+        case SET_FILMDATA:
+            return {
+                ...state,
+                filmData: action.payload
             }
         default:
             return state;

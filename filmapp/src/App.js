@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, useEffect} from "react";
 import users from "./dummy_data/users";
 import Header from "./component/Header/Header";
 import {Route, Switch} from "react-router-dom";
@@ -9,7 +9,13 @@ import ChangeFilm from "./component/Main/ChangeFilm";
 import Sign from "./component/Main/Sign";
 import Registration from "./component/Main/Registration";
 import NotFound from "./component/Main/NotFound";
-import Pangination from "./component/Main/Films/Pangination";
+import {useSelector, useDispatch} from "react-redux";
+import appReducer, {setFilmData, setLoading} from "./store/appReducer";
+import {loadGallery} from "./store/Middlevare";
+
+
+
+
 
 export default class App extends Component {
     state = {
@@ -563,7 +569,6 @@ export default class App extends Component {
                 <Route path='/' exact>
                     <Homepage filmData={filmToRender}
                               addFilm={this.state.myFilmAdd}
-                              role={this.state.role}
                               isFetching={this.state.isFetching}
                               selectedFilfer={this.state.selectedFilter}
                               statusHandler={this.statusHandler}
@@ -591,7 +596,7 @@ export default class App extends Component {
                 <Route path='/filminfo/:id'>
                     <FilmInfo selectedFilm={filmToRender.filter(el => el.id == this.state.selectFilmId)[0]}
                               genres={this.state.genres}
-                              role={this.state.role}
+
                               changeFilm={this.changeFilm}
                               deliteFilm={this.deliteFilm}
                               changeInput={this.changeInput}

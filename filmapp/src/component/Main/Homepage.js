@@ -3,8 +3,10 @@ import Filter from "./Films/Filter";
 import Pangination from "./Films/Pangination";
 import Cards from "./Films/Cards";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
-const Homepage = ({filmData, role, statusHandler, changeFilm, deliteFilm, openFilmInfo, selectPage, changePanginationPage, maxPanginationPage, changeFilter, isFetching, selectedFilfer}) => {
+const Homepage = ({filmData, statusHandler, changeFilm, deliteFilm, openFilmInfo,  changeFilter, isFetching, selectedFilfer}) => {
+    let role = useSelector((state) => state.appReducer.role)
     return (
         <div className='main'>
             <div className='flex'>

@@ -1,9 +1,10 @@
 import React from 'react';
 import placeholder from '../../img/placeholderFilm.jpg'
 import {Link, useParams} from "react-router-dom";
+import {useSelector} from "react-redux";
 
-const FilmInfo = ({selectedFilm, role, changeFilm, deliteFilm, genres, changeInput, userVote, validateInputs}) => {
-
+const FilmInfo = ({selectedFilm, changeFilm, deliteFilm, genres, changeInput, userVote, validateInputs}) => {
+    let role = useSelector((state) => state.appReducer.role)
     const {id} = useParams();
     let isAvalible = selectedFilm?.id != undefined && selectedFilm.id == id
     console.log(isAvalible)
