@@ -21,9 +21,11 @@ export default class App extends Component {
     state = {
         page: 'notConnect',
         apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
+        maxPage: 15,
         selectedFilter: 'Без фильтра',
-        role: 'admin',
-        userName: 'admin',
+        role: 'def',
+        userName: '',
+        selectPage: 1,
         selectFilmId: 0,
         inputs: {
             userVote: {
@@ -569,12 +571,16 @@ export default class App extends Component {
                 <Route path='/' exact>
                     <Homepage filmData={filmToRender}
                               addFilm={this.state.myFilmAdd}
+                              role={this.state.role}
+                              selectPage={this.state.selectPage}
+                              maxPanginationPage={this.state.maxPage}
                               isFetching={this.state.isFetching}
                               selectedFilfer={this.state.selectedFilter}
                               statusHandler={this.statusHandler}
                               changeFilm={this.changeFilm}
                               deliteFilm={this.deliteFilm}
                               openFilmInfo={this.openFilmInfo}
+                              changePanginationPage={this.changePanginationPage}
                               changeFilter={this.changeFilter}/>
                 </Route>
                 <Route path='/addfilm'>
