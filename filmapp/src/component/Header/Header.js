@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {roleChange, usernameChange} from "../../store/appReducer";
+import {roleChange, usernameChange} from "../../store/actions/app";
 
 const Header = ({statusHandler}) => {
     let username = useSelector((state) => state.appReducer.userName)

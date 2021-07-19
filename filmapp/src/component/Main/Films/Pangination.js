@@ -17,7 +17,6 @@ const Pangination = ({selectPage, changePanginationPage, maxPanginationPage, isF
     return (
         <div id='panginationDiv'>
             {isFetching? '' : panginationItems.map(el => <button key={el[1]} className={el[1] === selectPage ? 'panginationActive' : 'panginationDef'} onClick={() => changePanginationPage(el[1])}>{el[0]}</button>)}
-
         </div>
     );
 };

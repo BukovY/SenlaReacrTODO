@@ -2,7 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import {roleChange, usernameChange} from "../../store/appReducer";
+import {roleChange, usernameChange} from "../../store/actions/app";
 
 
 const Sign = () => {
