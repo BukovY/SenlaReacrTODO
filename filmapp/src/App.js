@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import users from "./dummy_data/users";
 import Header from "./component/Header/Header";
 import {Route, Switch} from "react-router-dom";
 import Homepage from "./component/Main/Homepage";
@@ -17,8 +16,6 @@ export default class App extends Component {
         apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
         maxPage: 15,
         selectedFilter: 'Без фильтра',
-        role: 'def',
-        userName: '',
         selectPage: 1,
         selectFilmId: 0,
         inputs: {
@@ -119,7 +116,6 @@ export default class App extends Component {
             },
         },
         warning: '',
-        users: users,
         isFetching: true,
         genres: [],
         filmData: [],
@@ -131,10 +127,9 @@ export default class App extends Component {
     statusHandler = (action) => {
         switch (action) {
             case 'main':
-                this.state.isFetching = true
-                this.state.page = 'main'
-                this.state.selectPage = 1
-                this.state.selectedFilter = 'Без фильтра'
+                this.setState(({}) => {
+                    return {isFetching: true, page: 'main', selectPage: 1, selectedFilter: 'Без фильтра'}
+                })
                 this.updateData()
                 break;
             case 'addFilm':
@@ -177,7 +172,7 @@ export default class App extends Component {
         this.state.inputs.isAdult.value = String(film.adult)
         this.state.inputs.isAdult.valid = true
         this.setState(({}) => {
-            return {selectFilmId: id, inputs: this.state.inputs}
+            return {selectFilmId: id, inputs: {...this.state.inputs}}
         })
     }
     deliteFilm = (id) => {
@@ -207,94 +202,7 @@ export default class App extends Component {
         for (let i of arg) {
             this.state.inputs[i].validateFunc()
         }
-        switch (key) { // changeVote signIn
-            case 'signIn':
-                let isAllValid = true
-                for (let i of arg) {
-                    if (this.state.inputs[i].valid === false) {
-                        isAllValid = false
-                        break
-                    }
-                }
-                if (isAllValid) {
-                    let current = ''
-                    for (let i of this.state.users) {
-                        if (this.state.inputs.email.value === i.email) {
-                            current = i
-                            break
-                        }
-                    }
-                    if (typeof current == 'object') { // email in
-                        if (current.password === this.state.inputs.password.value) { // ok
-                            // затираем значение перезаписываем имя и меняем роль перекидываем не главную
-                            for (let i of arg) {
-                                this.state.inputs[i].value = ''
-                            }
-                            this.setState(({}) => {
-                                return {role: current.role, page: 'main', userName: current.name}
-                            })
-                        } else { // wrong password
-                            this.state.inputs.password.valid = false
-                            this.setState(({}) => {
-                                return {warning: 'Wrong password'}
-                            })
-                        }
-                    } else { // email not found
-                        this.state.inputs.email.valid = false
-                        this.setState(({}) => {
-                            return {warning: 'Email not found'}
-                        })
-                    }
-                }
-                break;
-            case 'register':
-                let isAllValidReg = true
-                let isUserRegister = false
-                for (let i of this.state.users) {
-                    if (i.email === this.state.inputs.email.value) {
-                        isUserRegister = true
-                        this.state.warning = 'User is registred, signIn please'
-                    }
-                }
-                if (isUserRegister) {
-                    for (let i of arg) {
-                        this.state.inputs[i].valid = true
-                    }
-                    this.setState(({}) => {
-                        return {inputs: this.state.inputs, warning: this.state.warning}
-                    })
-                } else {
-                    for (let i of arg) {
-                        if (this.state.inputs[i].valid === false) {
-                            isAllValidReg = false
-                        }
-                    }
-                    if (isAllValidReg && this.state.inputs.password.value === this.state.inputs.repeatPassword.value) {
-                        let newUser = {
-                            name: this.state.inputs.name.value,
-                            password: this.state.inputs.password.value,
-                            role: "user",
-                            email: this.state.inputs.email.value
-                        }
-                        for (let i of arg) {
-                            this.state.inputs[i].value = ''
-                        }
-                        this.setState(({}) => {
-                            return {
-                                page: 'main',
-                                role: 'user',
-                                userName: newUser.name,
-                                users: [...this.state.users, newUser],
-                                inputs: this.state.inputs
-                            }
-                        })
-                    } else {
-                        this.setState(({}) => {
-                            return {inputs: this.state.inputs,}
-                        })
-                    }
-                }
-                break;
+        switch (key) {
             case 'changeVote':
                 this.setState(({}) => {
                     return {}
@@ -456,8 +364,8 @@ export default class App extends Component {
                     return response.json()
                 })
                 .then(data => {
-                    this.setState(({filmData, isFetching}) => {
-                        return {filmData: data.results, isFetching: false, page: 'main'}
+                    this.setState(({}) => {
+                        return {filmData: data.results, isFetching: false}
                     })
                 }))
     }
