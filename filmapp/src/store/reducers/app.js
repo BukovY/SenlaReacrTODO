@@ -2,8 +2,8 @@ import users from "../../dummy_data/users";
 import {ROLE_CHANGE, USERNAME_CHANGE, ADD_USER, SET_LOADING, SET_FILMDATA} from "../constatns";
 
 const initialStateApp = {
-    role: 'admin',
-    userName: 'admin',
+    role: 'def',
+    userName: '',
     users: users,
     isFetching: true,
     filmData: [],
