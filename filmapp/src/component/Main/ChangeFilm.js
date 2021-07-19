@@ -6,10 +6,10 @@ const ChangeFilm = ({title, description, pathImage, popularity, realiseDate, gen
     return (
         isAvalible && (idF == id) ? (<div className='main'>
             <h1>ChangeFilm id: {id}</h1>
-            {[[title, 'title'], [description, 'description'], [pathImage, 'pathImage'], [popularity, 'popularity'],  [averageVote, 'averageVote'], [voteCount, 'voteCount']].map(el => <>
+            {[[title, 'title'], [description, 'description'], [pathImage, 'pathImage'], [popularity, 'popularity'],  [averageVote, 'averageVote'], [voteCount, 'voteCount']].map(el => <div key={el[1]}>
                 <input placeholder={el[1]} className={el[0].valid ? '' : 'inputError'}
                        onChange={(ev) => changeInput(el[1], ev.target.value)} value={el[0].value}/>
-                {el[0].valid ? '' : `Incorrect ${el[1]}`}</>)}
+                {el[0].valid ? '' : `Incorrect ${el[1]}`}</div>)}
             <input type="date" placeholder={'realiseDate'} className={realiseDate.valid ? '' : 'inputError'}
                    onChange={(ev) => changeInput('realiseDate', ev.target.value)} value={realiseDate.value}/>
             {realiseDate.valid ? '' : `Incorrect realiseDate`}
@@ -17,7 +17,7 @@ const ChangeFilm = ({title, description, pathImage, popularity, realiseDate, gen
                           onChange={(ev) => adultInputChange(isAdult.value)}/>Adult</label>
             <h3>Genres</h3>
             <div className={genres.valid ? 'genres' : 'genres inputError'}>
-                {genresMap.map(el => <label><input type="checkbox"
+                {genresMap.map(el => <label key={el.name}><input type="checkbox"
                                                    checked={genres.value.indexOf(el.id) != -1 ? 'checked' : ''}
                                                    onChange={(ev) => genresInputChange(el.id)}/>{el.name}</label>)}
                 {genres.valid ? '' : 'Incorrect genres'}

@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {roleChange, usernameChange} from "../../store/appReducer";
 
-const Header = () => {
+const Header = ({statusHandler}) => {
     let username = useSelector((state) => state.appReducer.userName)
     let role = useSelector((state) => state.appReducer.role)
     let dispatch = useDispatch()
@@ -13,7 +13,7 @@ const Header = () => {
     }
     return (
         <header>
-            <Link to='/'>Home</Link>
+            <Link to='/' onClick={() => statusHandler('main')}>Home</Link>
             <div className='flex'>
                 <p>{username}</p>
                 {role == 'def' ? <Link to='/sign'> Sign in</Link> : <Link to='/' onClick={logout}> Log out</Link>}

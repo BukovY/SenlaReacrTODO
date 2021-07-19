@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from "react";
+import React, {Component} from "react";
 import users from "./dummy_data/users";
 import Header from "./component/Header/Header";
 import {Route, Switch} from "react-router-dom";
@@ -9,12 +9,6 @@ import ChangeFilm from "./component/Main/ChangeFilm";
 import Sign from "./component/Main/Sign";
 import Registration from "./component/Main/Registration";
 import NotFound from "./component/Main/NotFound";
-import {useSelector, useDispatch} from "react-redux";
-import appReducer, {setFilmData, setLoading} from "./store/appReducer";
-import {loadGallery} from "./store/Middlevare";
-
-
-
 
 
 export default class App extends Component {
@@ -566,7 +560,7 @@ export default class App extends Component {
         }
 
         return (<div className="container">
-            <Header />
+            <Header statusHandler={this.statusHandler}/>
             <Switch>
                 <Route path='/' exact>
                     <Homepage filmData={filmToRender}

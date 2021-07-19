@@ -40,7 +40,7 @@ const Registration = () => {
             const name = values.firstName
             const email = values.email
             const password = values.password
-            let ifIn = users.filter(el => el.email == email)
+            let ifIn = users.filter(el => el.email === email)
             if(ifIn.length > 0){
                 alert('Такой пользователь есть, порвторите регистрацию с другим ящиком')
             } else {

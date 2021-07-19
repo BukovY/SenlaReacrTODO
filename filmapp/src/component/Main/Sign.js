@@ -27,7 +27,7 @@ const Sign = () => {
             const mail = values.email;
             const pass = values.password;
             users.forEach((el) => {
-                if(el.email == mail && el.password == pass){
+                if(el.email === mail && el.password === pass){
                     dispatch(roleChange(el.role))
                     dispatch(usernameChange(el.name))
                     history.push('/');

@@ -11,7 +11,7 @@ const AddFilm = ({title, description, pathImage, popularity, realiseDate, genres
                    onChange={(ev) => changeInput('realiseDate', ev.target.value)} value={realiseDate.value}/>
             {realiseDate.valid ? '' : `Incorrect realiseDate`}
             <div className={genres.valid ? '' : 'inputError'}>
-                {genresMap.map(el => <label><input type="checkbox"
+                {genresMap.map(el => <label key={el.name}><input type="checkbox"
                                                    checked={genres.value.indexOf(el.id) != -1 ? 'checked' : ''}
                                                    onChange={(ev) => genresInputChange(el.id)}/>{el.name}</label>)}
                 {genres.valid ? '' : 'Incorrect genres'}

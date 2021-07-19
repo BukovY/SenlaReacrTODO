@@ -28,8 +28,8 @@ export const setFilmData = (el) => ({
 })
 
 const initialStateApp = {
-    role: 'def',
-    userName: '',
+    role: 'admin',
+    userName: 'admin',
     users: users,
     isFetching: true,
     filmData: [],
