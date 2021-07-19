@@ -1,10 +1,10 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
 const ChangeFilm = ({title, description, pathImage, popularity, realiseDate, genres, averageVote, voteCount, isAdult, genresMap, changeInput, adultInputChange, validateInputs, genresInputChange, idF}) => {
-    let isAvalible = idF != undefined
+    let isAvalible = idF !== undefined
     const {id} = useParams()
     return (
-        isAvalible && (idF == id) ? (<div className='main'>
+        isAvalible && (Number(idF) === Number(id)) ? (<div className='main'>
             <h1>ChangeFilm id: {id}</h1>
             {[[title, 'title'], [description, 'description'], [pathImage, 'pathImage'], [popularity, 'popularity'],  [averageVote, 'averageVote'], [voteCount, 'voteCount']].map(el => <div key={el[1]}>
                 <input placeholder={el[1]} className={el[0].valid ? '' : 'inputError'}
@@ -18,7 +18,7 @@ const ChangeFilm = ({title, description, pathImage, popularity, realiseDate, gen
             <h3>Genres</h3>
             <div className={genres.valid ? 'genres' : 'genres inputError'}>
                 {genresMap.map(el => <label key={el.name}><input type="checkbox"
-                                                   checked={genres.value.indexOf(el.id) != -1 ? 'checked' : ''}
+                                                   checked={genres.value.indexOf(el.id) !== -1 ? 'checked' : ''}
                                                    onChange={(ev) => genresInputChange(el.id)}/>{el.name}</label>)}
                 {genres.valid ? '' : 'Incorrect genres'}
             </div>

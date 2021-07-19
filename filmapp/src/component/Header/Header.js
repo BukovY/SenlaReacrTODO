@@ -16,7 +16,7 @@ const Header = ({statusHandler}) => {
             <Link to='/' onClick={() => statusHandler('main')}>Home</Link>
             <div className='flex'>
                 <p>{username}</p>
-                {role == 'def' ? <Link to='/sign'> Sign in</Link> : <Link to='/' onClick={logout}> Log out</Link>}
+                {role === 'def' ? <Link to='/sign'> Sign in</Link> : <Link to='/' onClick={logout}> Log out</Link>}
             </div>
         </header>
     );

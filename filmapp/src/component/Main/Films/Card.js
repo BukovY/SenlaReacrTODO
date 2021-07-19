@@ -14,11 +14,11 @@ const Card = ({el, changeFilm, role, deliteFilm, openFilmInfo}) => {
         <div className="cardFilm"  >
             <p >{el.original_title}</p>
             <Link  to={`/filminfo/${el.id}`} onClick={(ev) => openFilmInfo(el.id, ev.target.tagName)}>
-            <img src={link}/>
+            <img src={link} alt='cover'/>
             </Link>
             <p>{el.vote_average} / {el.release_date}</p>
-            {role == 'admin' ? <Link to={`/changefilm/${el.id}`} className='actionButton' onClick={() => changeFilm(el.id)}>Change film</Link> : ''}
-            {role == 'admin' ? <button className='actionButton' onClick={() => deliteFilm(el.id)}>Delite film</button> : ''}
+            {role === 'admin' ? <Link to={`/changefilm/${el.id}`} className='actionButton' onClick={() => changeFilm(el.id)}>Change film</Link> : ''}
+            {role === 'admin' ? <button className='actionButton' onClick={() => deliteFilm(el.id)}>Delite film</button> : ''}
         </div>
     </>)
 };
