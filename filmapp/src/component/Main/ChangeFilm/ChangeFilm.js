@@ -1,10 +1,10 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
 const ChangeFilm = ({title, description, pathImage, popularity, realiseDate, genres, averageVote, voteCount, isAdult, genresMap, changeInput, adultInputChange, validateInputs, genresInputChange, idF}) => {
-    let isAvalible = idF !== undefined
+    let isAvailable = idF !== undefined
     const {id} = useParams()
     return (
-        isAvalible && (Number(idF) === Number(id)) ? (<div className='main'>
+        isAvailable && (Number(idF) === Number(id)) ? (<div className='main'>
             <h1>ChangeFilm id: {id}</h1>
             {[[title, 'title'], [description, 'description'], [pathImage, 'pathImage'], [popularity, 'popularity'],  [averageVote, 'averageVote'], [voteCount, 'voteCount']].map(el => <div key={el[1]}>
                 <input placeholder={el[1]} className={el[0].valid ? '' : 'inputError'}

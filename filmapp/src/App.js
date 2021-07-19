@@ -9,7 +9,6 @@ import Sign from "./component/Main/Sign/Sign";
 import Registration from "./component/Main/Registration/Registration";
 import NotFound from "./component/Main/NotFound/NotFound";
 import {API_KEY} from "./store/constatns";
-import './css/Loader.css'
 import './css/Input.css'
 import './css/Button.css'
 

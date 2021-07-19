@@ -1,18 +1,18 @@
 import React from 'react';
 import './Pagination.css'
-const Pagination = ({selectPage, changePaginationPage, maxPanginationPage, isFetching}) => {
+const Pagination = ({selectPage, changePaginationPage, maxPaginationPage, isFetching}) => {
     let paginationItems = [];
 
     if (selectPage === 1) {
-        paginationItems = [[1,1],['next',2],['end',maxPanginationPage]]
+        paginationItems = [[1,1],['Next',2],['End',maxPaginationPage]]
     } else if (selectPage === 2) {
-        paginationItems = [['prev',1],[2,2],['next',3],['end',maxPanginationPage]]
-    } else if (selectPage > 2 && selectPage < maxPanginationPage - 1) {
-        paginationItems = [['first',1],['prev',selectPage - 1],[selectPage,selectPage],['next',selectPage + 1],['end',maxPanginationPage]]
-    } else if (selectPage === maxPanginationPage - 1) {
-        paginationItems = [['first',1],['prev',selectPage - 1],[selectPage,selectPage],['end',maxPanginationPage]]
-    } else if (selectPage === maxPanginationPage) {
-        paginationItems = [['first',1],['prev',maxPanginationPage - 1],[selectPage,maxPanginationPage]]
+        paginationItems = [['Prev',1],[2,2],['Next',3],['End',maxPaginationPage]]
+    } else if (selectPage > 2 && selectPage < maxPaginationPage - 1) {
+        paginationItems = [['First',1],['Prev',selectPage - 1],[selectPage,selectPage],['Next',selectPage + 1],['End',maxPaginationPage]]
+    } else if (selectPage === maxPaginationPage - 1) {
+        paginationItems = [['First',1],['Prev',selectPage - 1],[selectPage,selectPage],['End',maxPaginationPage]]
+    } else if (selectPage === maxPaginationPage) {
+        paginationItems = [['First',1],['Prev',maxPaginationPage - 1],[selectPage,maxPaginationPage]]
     }
 
     return (

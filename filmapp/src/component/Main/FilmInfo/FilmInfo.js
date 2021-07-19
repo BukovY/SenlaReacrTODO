@@ -6,10 +6,10 @@ import {useSelector} from "react-redux";
 const FilmInfo = ({selectedFilm, changeFilm, deleteFilm, genres, changeInput, userVote, validateInputs}) => {
     let role = useSelector((state) => state.appReducer.role)
     const {id} = useParams();
-    let isAvalible = selectedFilm?.id !== undefined && Number(selectedFilm.id) === Number(id)
+    let isAvailable = selectedFilm?.id !== undefined && Number(selectedFilm.id) === Number(id)
     let link = '';
     let genresRender = [];
-    if(isAvalible === true){
+    if(isAvailable === true){
         if(selectedFilm.backdrop_path != null){
             link = 'https://image.tmdb.org/t/p/w500/' + selectedFilm.backdrop_path
         } else {
@@ -23,7 +23,7 @@ const FilmInfo = ({selectedFilm, changeFilm, deleteFilm, genres, changeInput, us
     }
 
     return (
-        isAvalible ? (<div className='main '>
+        isAvailable ? (<div className='main '>
             <h1>Информация о фильме</h1>
             <div className='flex'>
                 <div><img src={link} height='auto' alt='cover'/>
