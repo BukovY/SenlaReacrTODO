@@ -8,6 +8,7 @@ import ChangeFilm from "./component/Main/ChangeFilm/ChangeFilm";
 import Sign from "./component/Main/Sign/Sign";
 import Registration from "./component/Main/Registration/Registration";
 import NotFound from "./component/Main/NotFound/NotFound";
+import {API_KEY} from "./store/constatns";
 import './css/Loader.css'
 import './css/Input.css'
 import './css/Button.css'
@@ -16,7 +17,6 @@ import './css/Button.css'
 export default class App extends Component {
     state = {
         page: 'notConnect',
-        apiKey: '687697daf00f72e0a7e20cf9f55a44ec',
         maxPage: 15,
         selectedFilter: 'Без фильтра',
         selectPage: 1,
@@ -304,7 +304,7 @@ export default class App extends Component {
             default:
                 alert('Нет такого фильтра, если добавил чноно новое то отрефакторь чтоб работало старое')
         }
-        let url1 = `https://api.themoviedb.org/3/discover/movie?api_key=${this.state.apiKey}&language=en-US&sort_by=${filter}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
+        let url1 = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=${filter}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
         fetch(url1)
             .then(response => {
                 return response.json()
@@ -357,8 +357,8 @@ export default class App extends Component {
             default:
                 alert('Нет такого фильтра, если добавил чноно новое то отрефакторь чтоб работало старое')
         }
-        let url = `https://api.themoviedb.org/3/discover/movie?api_key=${this.state.apiKey}&language=en-US&sort_by=${filter1}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
-        let genresUrl = `https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${this.state.apiKey}`
+        let url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=${filter1}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
+        let genresUrl = `https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${API_KEY}`
         fetch(genresUrl)
             .then(response => {return response.json()})
             .then(data => this.state.genres = data.genres)
@@ -434,7 +434,6 @@ export default class App extends Component {
                 <Route path='/filminfo/:id'>
                     <FilmInfo selectedFilm={filmToRender.filter(el => Number(el.id) === Number(this.state.selectFilmId))[0]}
                               genres={this.state.genres}
-
                               changeFilm={this.changeFilm}
                               deleteFilm={this.deleteFilm}
                               changeInput={this.changeInput}
@@ -457,7 +456,6 @@ export default class App extends Component {
                                 validateInputs={this.validateInputs}
                                 adultInputChange={this.adultInputChange}
                                 changeInput={this.changeInput}/>
-
                 </Route>
                 <Route path='/sign'>
                     <Sign/>
