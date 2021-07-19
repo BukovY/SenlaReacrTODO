@@ -1,6 +1,8 @@
 import React from 'react';
 import './Pagination.css'
-const Pagination = ({selectPage, changePaginationPage, maxPaginationPage, isFetching}) => {
+import {useSelector} from "react-redux";
+const Pagination = ({selectPage, changePaginationPage, isFetching}) => {
+    let maxPaginationPage = useSelector((state) => state.paginationChange.maxPage)
     let paginationItems = [];
 
     if (selectPage === 1) {

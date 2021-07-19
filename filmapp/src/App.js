@@ -12,11 +12,33 @@ import {API_KEY} from "./store/constatns";
 import './css/Input.css'
 import './css/Button.css'
 
+let changeSort = (el) => {
+    let filter;
+    switch (el) {
+        case 'Без фильтра':
+            filter = 'popularity.desc';
+            break;
+        case 'По убыванию рейтинга':
+            filter = 'vote_average.desc';
+            break;
+        case 'По возрастанию рейтинга':
+            filter = 'vote_average.asc';
+            break;
+        case 'По убыванию даты релиза':
+            filter = 'release_date.desc';
+            break;
+        case 'По возрастанию даты релиза':
+            filter = 'release_date.asc';
+            break;
+        default:
+            alert('Нет такого фильтра, если добавил чноно новое то отрефакторь чтоб работало старое')
+    }
+    return filter
+}
 
 export default class App extends Component {
     state = {
         page: 'notConnect',
-        maxPage: 15,
         selectedFilter: 'Без фильтра',
         selectPage: 1,
         selectFilmId: 0,
@@ -123,7 +145,6 @@ export default class App extends Component {
         filmData: [],
         myFilmAdd: [],
         delIds:[],
-        isConnect: true,
     };
 
     statusHandler = (action) => {
@@ -283,27 +304,7 @@ export default class App extends Component {
         })
     }
     updateData = () => {
-        let filter;
-        switch (this.state.selectedFilter) {
-            case 'Без фильтра':
-                filter = 'popularity.desc';
-                break;
-            case 'По убыванию рейтинга':
-                filter = 'vote_average.desc';
-                break;
-            case 'По возрастанию рейтинга':
-                filter = 'vote_average.asc';
-                break;
-            case 'По убыванию даты релиза':
-                filter = 'release_date.desc';
-                break;
-            case 'По возрастанию даты релиза':
-                filter = 'release_date.asc';
-                break;
-            default:
-                alert('Нет такого фильтра, если добавил чноно новое то отрефакторь чтоб работало старое')
-        }
-        let url1 = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=${filter}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
+        let url1 = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=${changeSort(this.state.selectedFilter)}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
         fetch(url1)
             .then(response => {
                 return response.json()
@@ -336,27 +337,7 @@ export default class App extends Component {
         })
     }
     componentDidMount() {
-        let filter1;
-        switch (this.state.selectedFilter) {
-            case 'Без фильтра':
-                filter1 = 'popularity.desc';
-                break;
-            case 'По убыванию рейтинга':
-                filter1 = 'vote_average.desc';
-                break;
-            case 'По возрастанию рейтинга':
-                filter1 = 'vote_average.asc';
-                break;
-            case 'По убыванию даты релиза':
-                filter1 = 'release_date.desc';
-                break;
-            case 'По возрастанию даты релиза':
-                filter1 = 'release_date.asc';
-                break;
-            default:
-                alert('Нет такого фильтра, если добавил чноно новое то отрефакторь чтоб работало старое')
-        }
-        let url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=${filter1}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
+        let url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=${changeSort(this.state.selectedFilter)}&include_adult=false&include_video=false&page=${this.state.selectPage}&with_watch_monetization_types=flatrate`
         let genresUrl = `https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${API_KEY}`
         fetch(genresUrl)
             .then(response => {return response.json()})
@@ -404,7 +385,6 @@ export default class App extends Component {
                     <Homepage filmData={filmToRender}
                               addFilm={this.state.myFilmAdd}
                               selectPage={this.state.selectPage}
-                              maxPaginationPage={this.state.maxPage}
                               isFetching={this.state.isFetching}
                               selectedFilter={this.state.selectedFilter}
                               statusHandler={this.statusHandler}
@@ -440,8 +420,9 @@ export default class App extends Component {
                               validateInputs={this.validateInputs}/>
                 </Route>
                 <Route path='/changefilm/:id'>
-                    <ChangeFilm title={this.state.inputs.title}
-                                idF={this.state.selectFilmId}
+                    <ChangeFilm idF={this.state.selectFilmId}
+
+                                title={this.state.inputs.title}
                                 description={this.state.inputs.description}
                                 pathImage={this.state.inputs.pathImage}
                                 popularity={this.state.inputs.popularity}
@@ -451,6 +432,7 @@ export default class App extends Component {
                                 voteCount={this.state.inputs.voteCount}
                                 isAdult={this.state.inputs.isAdult}
                                 genresMap={this.state.genres}
+
                                 genresInputChange={this.genresInputChange}
                                 validateInputs={this.validateInputs}
                                 adultInputChange={this.adultInputChange}
