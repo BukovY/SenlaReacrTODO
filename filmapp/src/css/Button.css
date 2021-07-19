@@ -1,0 +1,40 @@
+button {
+    background: #333;
+    color: #ccc;
+    width: 150px;
+    height: 30px;
+    border: 0;
+    font-size: 18px;
+    border-radius: 4px;
+    font-family: "Raleway", sans-serif;
+    transition: 0.6s;
+    overflow: hidden;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+button:focus {
+    outline: 0;
+}
+
+button:hover {
+    background: rgb(30, 0, 255);
+    cursor: pointer;
+}
+
+button:hover:before {
+    transform: translateX(300px) skewX(-15deg);
+    opacity: 0.6;
+    transition: 0.7s;
+}
+
+button:hover:after {
+    transform: translateX(300px) skewX(-15deg);
+    opacity: 1;
+    transition: 0.7s;
+}
+
+.actionButton{
+    width: calc(100% - 20px);
+    margin-bottom: 5px;
+}

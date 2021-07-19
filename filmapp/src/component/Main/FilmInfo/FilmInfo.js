@@ -1,5 +1,5 @@
 import React from 'react';
-import placeholder from '../../img/placeholderFilm.jpg'
+import placeholder from '../../../img/placeholderFilm.jpg'
 import {Link, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 
@@ -23,10 +23,10 @@ const FilmInfo = ({selectedFilm, changeFilm, deleteFilm, genres, changeInput, us
     }
 
     return (
-        isAvalible ? (<div className='main'>
+        isAvalible ? (<div className='main changeFilm'>
             <h1>Информация о фильме</h1>
             <div className='flex'>
-                <div><img src={link} width='100%' height='auto' alt='cover'/>
+                <div><img src={link} height='auto' alt='cover'/>
                     {role === 'admin' ? <Link to={`/changefilm/${selectedFilm.id}`} className='actionButton' onClick={() => changeFilm(selectedFilm.id)}>Change</Link> : ''}
                     {role === 'admin' ? <Link to='/' className='actionButton' onClick={() => deleteFilm(selectedFilm.id)}>Delete</Link> : ''}
                 </div>

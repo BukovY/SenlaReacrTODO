@@ -1,14 +1,17 @@
 import React, {Component} from "react";
 import Header from "./component/Header/Header";
 import {Route, Switch} from "react-router-dom";
-import Homepage from "./component/Main/Homepage";
-import AddFilm from "./component/Main/AddFilm";
-import FilmInfo from "./component/Main/FilmInfo";
-import ChangeFilm from "./component/Main/ChangeFilm";
-import Sign from "./component/Main/Sign";
-import Registration from "./component/Main/Registration";
-import NotFound from "./component/Main/NotFound";
-import './css/loader.css'
+import Homepage from "./component/Main/Homepage/Homepage";
+import AddFilm from "./component/Main/AddFilm/AddFilm";
+import FilmInfo from "./component/Main/FilmInfo/FilmInfo";
+import ChangeFilm from "./component/Main/ChangeFilm/ChangeFilm";
+import Sign from "./component/Main/Sign/Sign";
+import Registration from "./component/Main/Registration/Registration";
+import NotFound from "./component/Main/NotFound/NotFound";
+import './css/Main.css'
+import './css/Loader.css'
+import './css/Input.css'
+import './css/Button.css'
 
 
 export default class App extends Component {

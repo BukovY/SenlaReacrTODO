@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {useDispatch, useSelector} from "react-redux";
-import {addUser, usernameChange, roleChange} from "../../store/actions/app";
+import {addUser, usernameChange, roleChange} from "../../../store/actions/app";
 import { useHistory } from 'react-router-dom';
 
 

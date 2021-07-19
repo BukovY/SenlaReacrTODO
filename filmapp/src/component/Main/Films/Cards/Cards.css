@@ -1,0 +1,25 @@
+.film {
+    margin: 10px 0;
+}
+
+.film {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+@media screen and (max-width: 900px) {
+    .film {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 10px;
+    }
+}
+
+.film img {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}

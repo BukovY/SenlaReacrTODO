@@ -1,7 +1,7 @@
 import React from 'react';
-import Filter from "./Films/Filter";
-import Pagination from "./Films/Pagination/Pagination";
-import Cards from "./Films/Cards";
+import Filter from "../Films/Filter";
+import Pagination from "../Films/Pagination/Pagination";
+import Cards from "../Films/Cards/Cards";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 
