@@ -175,7 +175,7 @@ export default class App extends Component {
             return {selectFilmId: id, inputs: {...this.state.inputs}}
         })
     }
-    deliteFilm = (id) => {
+    deleteFilm = (id) => {
         this.setState(({}) => {
             return {delIds: [...this.state.delIds, id], page: 'main'}
         })
@@ -269,7 +269,7 @@ export default class App extends Component {
             return {}
         })
     }
-    changePanginationPage = (count) => {
+    changePaginationPage = (count) => {
         this.setState(({}) => {
             return {selectPage: count, isFetching: true}
         })
@@ -401,16 +401,15 @@ export default class App extends Component {
                 <Route path='/' exact>
                     <Homepage filmData={filmToRender}
                               addFilm={this.state.myFilmAdd}
-                              role={this.state.role}
                               selectPage={this.state.selectPage}
-                              maxPanginationPage={this.state.maxPage}
+                              maxPaginationPage={this.state.maxPage}
                               isFetching={this.state.isFetching}
-                              selectedFilfer={this.state.selectedFilter}
+                              selectedFilter={this.state.selectedFilter}
                               statusHandler={this.statusHandler}
                               changeFilm={this.changeFilm}
-                              deliteFilm={this.deliteFilm}
+                              deleteFilm={this.deleteFilm}
                               openFilmInfo={this.openFilmInfo}
-                              changePanginationPage={this.changePanginationPage}
+                              changePaginationPage={this.changePaginationPage}
                               changeFilter={this.changeFilter}/>
                 </Route>
                 <Route path='/addfilm'>
@@ -434,7 +433,7 @@ export default class App extends Component {
                               genres={this.state.genres}
 
                               changeFilm={this.changeFilm}
-                              deliteFilm={this.deliteFilm}
+                              deleteFilm={this.deleteFilm}
                               changeInput={this.changeInput}
                               userVote={this.state.inputs.userVote}
                               validateInputs={this.validateInputs}/>

@@ -3,7 +3,7 @@ import placeholder from '../../img/placeholderFilm.jpg'
 import {Link, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 
-const FilmInfo = ({selectedFilm, changeFilm, deliteFilm, genres, changeInput, userVote, validateInputs}) => {
+const FilmInfo = ({selectedFilm, changeFilm, deleteFilm, genres, changeInput, userVote, validateInputs}) => {
     let role = useSelector((state) => state.appReducer.role)
     const {id} = useParams();
     let isAvalible = selectedFilm?.id !== undefined && Number(selectedFilm.id) === Number(id)
@@ -28,7 +28,7 @@ const FilmInfo = ({selectedFilm, changeFilm, deliteFilm, genres, changeInput, us
             <div className='flex'>
                 <div><img src={link} width='100%' height='auto' alt='cover'/>
                     {role === 'admin' ? <Link to={`/changefilm/${selectedFilm.id}`} className='actionButton' onClick={() => changeFilm(selectedFilm.id)}>Change</Link> : ''}
-                    {role === 'admin' ? <Link to='/' className='actionButton' onClick={() => deliteFilm(selectedFilm.id)}>Delite</Link> : ''}
+                    {role === 'admin' ? <Link to='/' className='actionButton' onClick={() => deleteFilm(selectedFilm.id)}>Delete</Link> : ''}
                 </div>
                 <div><p>Title: {selectedFilm.title}</p>
                     <p>Overview: {selectedFilm.overview}</p>

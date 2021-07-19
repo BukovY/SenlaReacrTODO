@@ -1,5 +1,5 @@
 import React from 'react';
-const Pagination = ({selectPage, changePanginationPage, maxPanginationPage, isFetching}) => {
+const Pagination = ({selectPage, changePaginationPage, maxPanginationPage, isFetching}) => {
     let paginationItems = [];
 
     if (selectPage === 1) {
@@ -16,7 +16,7 @@ const Pagination = ({selectPage, changePanginationPage, maxPanginationPage, isFe
 
     return (
         <div id='paginationDiv'>
-            {isFetching? '' : paginationItems.map(el => <button key={el[1]} className={el[1] === selectPage ? 'paginationActive' : 'paginationDef'} onClick={() => changePanginationPage(el[1])}>{el[0]}</button>)}
+            {isFetching? '' : paginationItems.map(el => <button key={el[1]} className={el[1] === selectPage ? 'paginationActive' : 'paginationDef'} onClick={() => changePaginationPage(el[1])}>{el[0]}</button>)}
         </div>
     );
 };
