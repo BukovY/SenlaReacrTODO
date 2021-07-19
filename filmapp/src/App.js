@@ -137,17 +137,18 @@ export default class App extends Component {
                 this.updateData()
                 break;
             case 'addFilm':
+                let inputs = {...this.state.inputs}
                 for (let i of ['title', 'description', 'pathImage', 'popularity', 'realiseDate', 'genres', 'averageVote', 'voteCount', 'isAdult']) {
                     if (i !== 'genres') {
-                        this.state.inputs[i].value = ''
-                        this.state.inputs[i].valid = true
+                        inputs[i].value = ''
+                        inputs[i].valid = true
                     } else {
-                        this.state.inputs[i].value = []
-                        this.state.inputs[i].valid = true
+                        inputs[i].value = []
+                        inputs[i].valid = true
                     }
                 }
-                this.setState(({}) => {
-                    return {inputs: this.state.inputs}
+                this.setState(({inputs}) => {
+                    return {inputs: inputs}
                 })
                 break;
             default:
@@ -157,26 +158,27 @@ export default class App extends Component {
     }
     changeFilm = (id) => {
         let film = [...this.state.myFilmAdd, ...this.state.filmData].filter(el => Number(el.id) === Number(id))[0]
-        this.state.inputs.title.value = film.original_title
-        this.state.inputs.title.valid = true
-        this.state.inputs.description.value = film.overview
-        this.state.inputs.description.valid = true
-        this.state.inputs.pathImage.value = film.poster_path
-        this.state.inputs.pathImage.valid = true
-        this.state.inputs.popularity.value = String(film.popularity)
-        this.state.inputs.popularity.valid = true
-        this.state.inputs.realiseDate.value = film.release_date
-        this.state.inputs.realiseDate.valid = true
-        this.state.inputs.genres.value = film.genre_ids
-        this.state.inputs.genres.valid = true
-        this.state.inputs.averageVote.value = String(film.vote_average)
-        this.state.inputs.averageVote.valid = true
-        this.state.inputs.voteCount.value = String(film.vote_count)
-        this.state.inputs.voteCount.valid = true
-        this.state.inputs.isAdult.value = String(film.adult)
-        this.state.inputs.isAdult.valid = true
-        this.setState(({}) => {
-            return {selectFilmId: id, inputs: {...this.state.inputs}}
+        let inputs = {...this.state.inputs}
+        inputs.title.value = film.original_title
+        inputs.title.valid = true
+        inputs.description.value = film.overview
+        inputs.description.valid = true
+        inputs.pathImage.value = film.poster_path
+        inputs.pathImage.valid = true
+        inputs.popularity.value = String(film.popularity)
+        inputs.popularity.valid = true
+        inputs.realiseDate.value = film.release_date
+        inputs.realiseDate.valid = true
+        inputs.genres.value = film.genre_ids
+        inputs.genres.valid = true
+        inputs.averageVote.value = String(film.vote_average)
+        inputs.averageVote.valid = true
+        inputs.voteCount.value = String(film.vote_count)
+        inputs.voteCount.valid = true
+        inputs.isAdult.value = String(film.adult)
+        inputs.isAdult.valid = true
+        this.setState(({inputs}) => {
+            return {selectFilmId: id, inputs: inputs}
         })
     }
     deleteFilm = (id) => {
@@ -213,18 +215,18 @@ export default class App extends Component {
                 })
                 break
             case 'clear':
+                let inputs = {...this.state.inputs}
                 for (let i of arg) {
                     if (i !== 'genres') {
-                        this.state.inputs[i].value = ''
-                        this.state.inputs[i].valid = true
+                        inputs[i].value = ''
+                        inputs[i].valid = true
                     } else {
-                        this.state.inputs[i].value = []
-                        this.state.inputs[i].valid = true
+                        inputs[i].value = []
+                        inputs[i].valid = true
                     }
                 }
-                this.state.warning = ''
                 this.setState(({}) => {
-                    return {inputs: this.state.inputs, warning: this.state.warning}
+                    return {inputs: inputs, warning: ''}
                 })
                 break
             case 'addFilm':
@@ -249,19 +251,18 @@ export default class App extends Component {
                         adult:this.state.inputs.isAdult.value,
                         id: parseInt(Math.random()*100000)
                     }
+                    let inputs = {...this.state.inputs}
                     for (let i of arg) {
                         if (i !== 'genres') {
-                            this.state.inputs[i].value = ''
-                            this.state.inputs[i].valid = true
+                            inputs[i].value = ''
+                            inputs[i].valid = true
                         } else {
-                            this.state.inputs[i].value = []
-                            this.state.inputs[i].valid = true
+                            inputs[i].value = []
+                            inputs[i].valid = true
                         }
                     }
-                    this.state.myFilmAdd.push(obg)
-                    console.log(this.state.myFilmAdd)
-                    this.setState(({}) => {
-                        return {myFilmAdd: this.state.myFilmAdd}
+                    this.setState(({ inputs}) => {
+                        return {myFilmAdd: [...this.state.myFilmAdd, obg], inputs: inputs}
                     })
                 }
                 break
@@ -361,7 +362,6 @@ export default class App extends Component {
         let genresUrl = `https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${this.state.apiKey}`
         fetch(genresUrl)
             .then(response => {return response.json()})
-
             .then(data => this.state.genres = data.genres)
             .then(fetch(url)
                 .then(response => {
