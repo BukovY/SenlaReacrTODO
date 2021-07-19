@@ -15,8 +15,8 @@ const Pagination = ({selectPage, changePanginationPage, maxPanginationPage, isFe
     }
 
     return (
-        <div id='panginationDiv'>
-            {isFetching? '' : paginationItems.map(el => <button key={el[1]} className={el[1] === selectPage ? 'panginationActive' : 'panginationDef'} onClick={() => changePanginationPage(el[1])}>{el[0]}</button>)}
+        <div id='paginationDiv'>
+            {isFetching? '' : paginationItems.map(el => <button key={el[1]} className={el[1] === selectPage ? 'paginationActive' : 'paginationDef'} onClick={() => changePanginationPage(el[1])}>{el[0]}</button>)}
         </div>
     );
 };

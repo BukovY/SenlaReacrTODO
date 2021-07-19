@@ -14,12 +14,12 @@ code {
 .inputError {
   box-shadow: 0px 0px 3px 0px rgb(255 0 0 / 50%) inset;
 }
-.panginationActive {
+.paginationActive {
   background-color: rgb(30, 0, 255);
   margin: 0 20px;
   color: white;
 }
-.panginationDef {
+.paginationDef {
   background-color: rgb(176, 166, 255);
   margin: 0 20px;
 }
@@ -144,12 +144,12 @@ header {
   margin: 10px 0;
 }
 
-#panginationDiv {
+#paginationDiv {
   display: flex;
   justify-content: center;
 }
 
-.panginationActive {
+.paginationActive {
   background-color: rgb(30, 0, 255);
   margin: 0 20px;
 }
@@ -232,7 +232,6 @@ input[type='checkbox'] {
 #selectGenre {
   display: flex;
   flex-direction: column;
-  /*border: 1px solid aqua;*/
 }
 
 label {
@@ -252,22 +251,6 @@ textarea {
   width: 100%;
   padding-right: 15px;
 }
-
-
-/*
-card
-.cardFilm p:first-child {
-    position: relative;
-    right: 0px;
-    top: 50px;
-    align-items: center;
-    color: white;
-    text-align: center;
-    display: none;
-    margin: 0;
-    padding: 0;
-}
-*/
 
 .cardFilm p:first-child {
   text-align: center;
@@ -300,9 +283,7 @@ select {
   font-weight: 400;
   text-shadow: 0 1px 0 rgba(4, 58, 255, 0.8);
   padding: 10px 18px 10px 10px;
-  /* Styles */
   border: none;
-  /* Remove the default border */
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1), inset 0 3px 2px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
   background: #333;
