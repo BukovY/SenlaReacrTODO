@@ -5,7 +5,7 @@ const initialState = {
     selectPage: 1
 }
 
-const panginationChange = (state = initialState, action) => {
+const paginationChange = (state = initialState, action) => {
     switch (action.type) {
         case CHANGE_PAGE:
             return{
@@ -17,4 +17,4 @@ const panginationChange = (state = initialState, action) => {
     }
 }
 
-export default panginationChange
+export default paginationChange

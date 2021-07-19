@@ -1,9 +1,9 @@
 import {createStore, combineReducers, compose} from 'redux'
-import panginationChange from "./reducers/pangination";
+import paginationChange from "./reducers/pangination";
 import appReducer from "./reducers/app";
 
 const rootReducer = combineReducers({
-    panginationChange,
+    paginationChange,
     appReducer
 })
 

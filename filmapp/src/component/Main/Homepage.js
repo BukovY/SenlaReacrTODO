@@ -1,6 +1,6 @@
 import React from 'react';
 import Filter from "./Films/Filter";
-import Pangination from "./Films/Pangination";
+import Pagination from "./Films/Pagination";
 import Cards from "./Films/Cards";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -14,7 +14,7 @@ const Homepage = ({filmData, statusHandler, changeFilm, deliteFilm, openFilmInfo
                 {role === 'admin' ? <Link to='/addfilm' onClick={() => statusHandler('addFilm')}>Add film</Link> : ''}
             </div>
             {isFetching ? <div className="loader"></div> : <Cards filmData={filmData} changeFilm={changeFilm} role={role} deliteFilm={deliteFilm} openFilmInfo={openFilmInfo}/>}
-            <Pangination isFetching={isFetching} selectPage={selectPage} changePanginationPage={changePanginationPage} maxPanginationPage={maxPanginationPage}/>
+            <Pagination isFetching={isFetching} selectPage={selectPage} changePanginationPage={changePanginationPage} maxPanginationPage={maxPanginationPage}/>
         </div>
     );
 };
