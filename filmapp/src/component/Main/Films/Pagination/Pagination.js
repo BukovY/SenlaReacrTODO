@@ -1,4 +1,5 @@
 import React from 'react';
+import './Pagination.css'
 const Pagination = ({selectPage, changePaginationPage, maxPanginationPage, isFetching}) => {
     let paginationItems = [];
 
@@ -15,7 +16,7 @@ const Pagination = ({selectPage, changePaginationPage, maxPanginationPage, isFet
     }
 
     return (
-        <div id='paginationDiv'>
+        <div className='paginationDiv'>
             {isFetching? '' : paginationItems.map(el => <button key={el[1]} className={el[1] === selectPage ? 'paginationActive' : 'paginationDef'} onClick={() => changePaginationPage(el[1])}>{el[0]}</button>)}
         </div>
     );

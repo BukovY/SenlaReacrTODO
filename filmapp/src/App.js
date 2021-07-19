@@ -8,6 +8,7 @@ import ChangeFilm from "./component/Main/ChangeFilm";
 import Sign from "./component/Main/Sign";
 import Registration from "./component/Main/Registration";
 import NotFound from "./component/Main/NotFound";
+import './css/loader.css'
 
 
 export default class App extends Component {

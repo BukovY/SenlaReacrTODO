@@ -1,0 +1,24 @@
+.cardFilm p:first-child {
+    text-align: center;
+}
+
+.cardFilm p:nth-child(1) {
+    height: 36px;
+}
+
+.cardFilm p:nth-child(3) {
+    position: relative;
+    right: 0px;
+    top: -50px;
+    align-items: center;
+    color: white;
+    text-align: center;
+    display: none;
+    margin: 0;
+    padding: 0;
+    height: 0px;
+}
+
+.cardFilm:hover p {
+    display: block;
+}

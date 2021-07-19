@@ -1,6 +1,7 @@
 import React from 'react';
-import placeholder from '../../../img/placeholderFilm.jpg'
+import placeholder from '../../../../img/placeholderFilm.jpg'
 import {Link} from 'react-router-dom'
+import './Card.css'
 
 const Card = ({el, changeFilm, role, deleteFilm, openFilmInfo}) => {
     let link
