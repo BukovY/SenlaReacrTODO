@@ -9,7 +9,7 @@ import './Homepage.css'
 const Homepage = ({filmData, statusHandler, changeFilm, deleteFilm, openFilmInfo, selectPage, changePaginationPage, maxPaginationPage, changeFilter, isFetching, selectedFilter}) => {
     let role = useSelector((state) => state.appReducer.role)
     return (
-        <div className='main'>
+        <div>
             <div className='flex'>
                 <Filter changeFilter={changeFilter} selectedFilter={selectedFilter}/>
                 {role === 'admin' ? <Link to='/addfilm' onClick={() => statusHandler('addFilm')}>Add film</Link> : ''}

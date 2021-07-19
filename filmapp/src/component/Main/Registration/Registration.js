@@ -35,14 +35,13 @@ const Registration = () => {
                 'Passwords must match'
             ),
         }),
-        // { name: "admin", password: "533533", role: "admin", email: 'admin@mail.ru' }
         onSubmit: (values) => {
             const name = values.firstName
             const email = values.email
             const password = values.password
             let ifIn = users.filter(el => el.email === email)
             if(ifIn.length > 0){
-                alert('Такой пользователь есть, порвторите регистрацию с другим ящиком')
+                alert('User is found, sign up')
             } else {
                 dispatch(addUser({ name: name, password: password, role: "user", email: email }))
                 dispatch(usernameChange(name))
@@ -53,8 +52,8 @@ const Registration = () => {
     });
 
     return (
-        <div class="modal_block">
-            <form className="modal-form" onSubmit={handleSubmit}>
+        <div>
+            <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Enter you name</label>
                 <input
                     id="user_name"
@@ -114,7 +113,7 @@ const Registration = () => {
                     type="submit"
                     value="Sing Up"
                 />
-                <input className="btn-input" type="reset" value="Clear" />
+                <input type="reset" value="Clear" />
             </form>
         </div>
     );

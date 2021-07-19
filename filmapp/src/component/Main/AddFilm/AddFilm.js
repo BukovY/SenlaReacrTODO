@@ -1,7 +1,7 @@
 import React from 'react';
 const AddFilm = ({title, description, pathImage, popularity, realiseDate, genres, averageVote, voteCount, isAdult, genresMap, changeInput, adultInputChange, validateInputs, genresInputChange}) => {
     return (
-        <div className='main'>
+        <div>
             <h1>AddFilm</h1>
             {[[title, 'title'], [description, 'description'], [pathImage, 'pathImage'], [popularity, 'popularity'],  [averageVote, 'averageVote'], [voteCount, 'voteCount']].map(el => <div key={el[1]}>
                 <input placeholder={el[1]} className={el[0].valid ? '' : 'inputError'}

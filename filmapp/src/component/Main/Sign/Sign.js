@@ -38,7 +38,7 @@ const Sign = () => {
 
     return (
         <div>
-            <form className="modal-form" onSubmit={handleSubmit}>
+            <form  onSubmit={handleSubmit}>
                 <label htmlFor="email">Enter you email</label>
                 <input
                     id="email"
@@ -61,10 +61,10 @@ const Sign = () => {
                     <div>{errors.password}</div>
                 ) : null}
 
-                <button className="btn-sign" type="submit">
+                <button type="submit">
                     Sign
                 </button>
-                <Link className="btn-registration" to="/registration">
+                <Link  to="/registration">
                     Registration
                 </Link>
             </form>

@@ -4,7 +4,7 @@ const ChangeFilm = ({title, description, pathImage, popularity, realiseDate, gen
     let isAvailable = idF !== undefined
     const {id} = useParams()
     return (
-        isAvailable && (Number(idF) === Number(id)) ? (<div className='main'>
+        isAvailable && (Number(idF) === Number(id)) ? (<div>
             <h1>ChangeFilm id: {id}</h1>
             {[[title, 'title'], [description, 'description'], [pathImage, 'pathImage'], [popularity, 'popularity'],  [averageVote, 'averageVote'], [voteCount, 'voteCount']].map(el => <div key={el[1]}>
                 <input placeholder={el[1]} className={el[0].valid ? '' : 'inputError'}

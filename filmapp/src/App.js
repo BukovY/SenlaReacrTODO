@@ -421,7 +421,6 @@ export default class App extends Component {
                 </Route>
                 <Route path='/changefilm/:id'>
                     <ChangeFilm idF={this.state.selectFilmId}
-
                                 title={this.state.inputs.title}
                                 description={this.state.inputs.description}
                                 pathImage={this.state.inputs.pathImage}
@@ -432,7 +431,6 @@ export default class App extends Component {
                                 voteCount={this.state.inputs.voteCount}
                                 isAdult={this.state.inputs.isAdult}
                                 genresMap={this.state.genres}
-
                                 genresInputChange={this.genresInputChange}
                                 validateInputs={this.validateInputs}
                                 adultInputChange={this.adultInputChange}
