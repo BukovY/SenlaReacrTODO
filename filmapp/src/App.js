@@ -27,56 +27,9 @@ export default class App extends Component {
                 valid: true,
                 validateFunc: () => {
                     let input = this.state.inputs.userVote
-                    if (input.value.indexOf('.') == -1 && input.value.indexOf(',') == -1 && input.value > 0 && input.value < 11) {
+                    if (input.value.indexOf('.') === -1 && input.value.indexOf(',') === -1 && input.value >= 0 && input.value < 11) {
                         alert('Оценка корректная и она летит в запросе на сервер')
                     } else {
-                        input.valid = false
-                    }
-                }
-            },
-            email: {
-                value: '',
-                valid: true,
-                validateFunc: () => {
-                    let input = this.state.inputs.email
-                    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    if (!re.test(String(input.value).toLowerCase())) {
-                        input.valid = false
-                    }
-                }
-            },
-            password: {
-                value: '',
-                valid: true,
-                validateFunc: () => {
-                    let input = this.state.inputs.password
-                    if (input.value.length < 5) {
-                        input.valid = false
-                    }
-                }
-            },
-            name: {
-                value: '',
-                valid: true,
-                validateFunc: () => {
-                    let input = this.state.inputs.name
-                    input.valid = (input.value.match(/^[A-Za-zА-Яа-яЁё\s]+$/) && input.value.length > 5)
-                }
-            },
-            surname: {
-                value: '',
-                valid: true,
-                validateFunc: () => {
-                    let input = this.state.inputs.surname
-                    input.valid = (input.value.match(/^[A-Za-zА-Яа-яЁё\s]+$/) && input.value.length > 5)
-                }
-            },
-            repeatPassword: {
-                value: '',
-                valid: true,
-                validateFunc: () => {
-                    let input = this.state.inputs.repeatPassword
-                    if (input.value.length < 5) {
                         input.valid = false
                     }
                 }
@@ -111,7 +64,7 @@ export default class App extends Component {
                 valid: true,
                 validateFunc: () => {
                     let input = this.state.inputs.popularity
-                    if (input.value.indexOf('.') == -1 && input.value.indexOf(',') == -1 && input.value > 0 && input.value < 11) {
+                    if (input.value.indexOf('.') === -1 && input.value.indexOf(',') === -1 && input.value >= 0 && input.value < 11) {
                         input.valid = true
                     } else {
                         input.valid = false
@@ -123,7 +76,7 @@ export default class App extends Component {
                 valid: true,
                 validateFunc: () => {
                     let input = this.state.inputs.realiseDate
-                    input.valid = input.value != ''
+                    input.valid = input.value !== ''
                 }
             },
             genres: {
@@ -131,7 +84,7 @@ export default class App extends Component {
                 valid: true,
                 validateFunc: () => {
                     let input = this.state.inputs.genres
-                    input.valid = input.value.length != 0
+                    input.valid = input.value.length !== 0
                 }
             },
             averageVote: {
@@ -139,7 +92,7 @@ export default class App extends Component {
                 valid: true,
                 validateFunc: () => {
                     let input = this.state.inputs.averageVote
-                    if (input.value.indexOf('.') == -1 && input.value.indexOf(',') == -1 && input.value > 0 && input.value < 500000) {
+                    if (input.value.indexOf('.') === -1 && input.value.indexOf(',') === -1 && input.value > 0 && input.value < 500000) {
                         input.valid = true
                     } else {
                         input.valid = false
@@ -177,31 +130,6 @@ export default class App extends Component {
 
     statusHandler = (action) => {
         switch (action) {
-            case 'addFilmAdminLogout':
-                this.setState(({}) => {
-                    return {page: '404', role:'def', userName:''}
-                })
-                break;
-            case 'goHomepage':
-                this.setState(({}) => {
-                    return {page: 'main'}
-                })
-                break;
-            case 'mainLogOut':
-                this.setState(({}) => {
-                    return {userName: '', page: 'main', role: 'def'}
-                })
-                break;
-            case 'sign':
-                this.setState(({}) => {
-                    return {page: 'sign',}
-                })
-                break;
-            case 'registration':
-                this.setState(({}) => {
-                    return {page: 'registration'}
-                })
-                break;
             case 'main':
                 this.state.isFetching = true
                 this.state.page = 'main'
@@ -211,7 +139,7 @@ export default class App extends Component {
                 break;
             case 'addFilm':
                 for (let i of ['title', 'description', 'pathImage', 'popularity', 'realiseDate', 'genres', 'averageVote', 'voteCount', 'isAdult']) {
-                    if (i != 'genres') {
+                    if (i !== 'genres') {
                         this.state.inputs[i].value = ''
                         this.state.inputs[i].valid = true
                     } else {
@@ -220,7 +148,7 @@ export default class App extends Component {
                     }
                 }
                 this.setState(({}) => {
-                    return {page: 'addFilm', inputs: this.state.inputs}
+                    return {inputs: this.state.inputs}
                 })
                 break;
             default:
@@ -229,7 +157,7 @@ export default class App extends Component {
         }
     }
     changeFilm = (id) => {
-        let film = [...this.state.myFilmAdd, ...this.state.filmData].filter(el => el.id == id)[0]
+        let film = [...this.state.myFilmAdd, ...this.state.filmData].filter(el => Number(el.id) === Number(id))[0]
         this.state.inputs.title.value = film.original_title
         this.state.inputs.title.valid = true
         this.state.inputs.description.value = film.overview
@@ -249,7 +177,7 @@ export default class App extends Component {
         this.state.inputs.isAdult.value = String(film.adult)
         this.state.inputs.isAdult.valid = true
         this.setState(({}) => {
-            return {page: 'changeFilm', selectFilmId: id, inputs: this.state.inputs}
+            return {selectFilmId: id, inputs: this.state.inputs}
         })
     }
     deliteFilm = (id) => {
@@ -258,7 +186,7 @@ export default class App extends Component {
         })
     }
     openFilmInfo = (id, tagName) => {
-        if (tagName != 'BUTTON') {
+        if (String(tagName) !== String('BUTTON')) {
             let inputs = this.state.inputs
             inputs.userVote.valid = true
             inputs.userVote.value = ''
@@ -283,7 +211,7 @@ export default class App extends Component {
             case 'signIn':
                 let isAllValid = true
                 for (let i of arg) {
-                    if (this.state.inputs[i].valid == false) {
+                    if (this.state.inputs[i].valid === false) {
                         isAllValid = false
                         break
                     }
@@ -291,13 +219,13 @@ export default class App extends Component {
                 if (isAllValid) {
                     let current = ''
                     for (let i of this.state.users) {
-                        if (this.state.inputs.email.value == i.email) {
+                        if (this.state.inputs.email.value === i.email) {
                             current = i
                             break
                         }
                     }
                     if (typeof current == 'object') { // email in
-                        if (current.password == this.state.inputs.password.value) { // ok
+                        if (current.password === this.state.inputs.password.value) { // ok
                             // затираем значение перезаписываем имя и меняем роль перекидываем не главную
                             for (let i of arg) {
                                 this.state.inputs[i].value = ''
@@ -323,7 +251,7 @@ export default class App extends Component {
                 let isAllValidReg = true
                 let isUserRegister = false
                 for (let i of this.state.users) {
-                    if (i.email == this.state.inputs.email.value) {
+                    if (i.email === this.state.inputs.email.value) {
                         isUserRegister = true
                         this.state.warning = 'User is registred, signIn please'
                     }
@@ -337,11 +265,11 @@ export default class App extends Component {
                     })
                 } else {
                     for (let i of arg) {
-                        if (this.state.inputs[i].valid == false) {
+                        if (this.state.inputs[i].valid === false) {
                             isAllValidReg = false
                         }
                     }
-                    if (isAllValidReg && this.state.inputs.password.value == this.state.inputs.repeatPassword.value) {
+                    if (isAllValidReg && this.state.inputs.password.value === this.state.inputs.repeatPassword.value) {
                         let newUser = {
                             name: this.state.inputs.name.value,
                             password: this.state.inputs.password.value,
@@ -374,7 +302,7 @@ export default class App extends Component {
                 break
             case 'clear':
                 for (let i of arg) {
-                    if (i != 'genres') {
+                    if (i !== 'genres') {
                         this.state.inputs[i].value = ''
                         this.state.inputs[i].valid = true
                     } else {
@@ -390,7 +318,7 @@ export default class App extends Component {
             case 'addFilm':
                 let addFilmAllValid = true;
                 for (let i of arg) {
-                    if (this.state.inputs[i].valid == false) {
+                    if (this.state.inputs[i].valid === false) {
                         addFilmAllValid = false
                         break
                     }
@@ -410,7 +338,7 @@ export default class App extends Component {
                         id: parseInt(Math.random()*100000)
                     }
                     for (let i of arg) {
-                        if (i != 'genres') {
+                        if (i !== 'genres') {
                             this.state.inputs[i].value = ''
                             this.state.inputs[i].valid = true
                         } else {
@@ -487,10 +415,10 @@ export default class App extends Component {
     }
     genresInputChange = (el) => {
         let input = this.state.inputs.genres
-        if (input.value.indexOf(el) == -1) {
+        if (input.value.indexOf(el) === -1) {
             input.value.push(el)
         } else {
-            input.value = input.value.filter(element => element != el)
+            input.value = input.value.filter(element => element !== el)
         }
         this.setState(({inputs}) => {
             return {inputs: inputs}
@@ -540,7 +468,7 @@ export default class App extends Component {
     }
     render() {
         let filmToRender = []
-        let remainingFilm = this.state.filmData.filter(el => this.state.delIds.indexOf(el.id) == -1)
+        let remainingFilm = this.state.filmData.filter(el => this.state.delIds.indexOf(el.id) === -1)
         if(this.state.page === 'main' && this.state.selectedFilter === 'Без фильтра' && this.state.myFilmAdd.length > 0 && this.state.selectPage === 1){
             let counter = 0;
             for(let i of this.state.myFilmAdd){
@@ -594,7 +522,7 @@ export default class App extends Component {
                              changeInput={this.changeInput}/>
                 </Route>
                 <Route path='/filminfo/:id'>
-                    <FilmInfo selectedFilm={filmToRender.filter(el => el.id == this.state.selectFilmId)[0]}
+                    <FilmInfo selectedFilm={filmToRender.filter(el => Number(el.id) === Number(this.state.selectFilmId))[0]}
                               genres={this.state.genres}
 
                               changeFilm={this.changeFilm}
