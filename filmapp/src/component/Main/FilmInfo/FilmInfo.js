@@ -23,7 +23,7 @@ const FilmInfo = ({selectedFilm, changeFilm, deleteFilm, genres, changeInput, us
     }
 
     return (
-        isAvalible ? (<div className='main changeFilm'>
+        isAvalible ? (<div className='main '>
             <h1>Информация о фильме</h1>
             <div className='flex'>
                 <div><img src={link} height='auto' alt='cover'/>

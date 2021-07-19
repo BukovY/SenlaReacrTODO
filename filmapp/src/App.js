@@ -8,7 +8,6 @@ import ChangeFilm from "./component/Main/ChangeFilm/ChangeFilm";
 import Sign from "./component/Main/Sign/Sign";
 import Registration from "./component/Main/Registration/Registration";
 import NotFound from "./component/Main/NotFound/NotFound";
-import './css/Main.css'
 import './css/Loader.css'
 import './css/Input.css'
 import './css/Button.css'

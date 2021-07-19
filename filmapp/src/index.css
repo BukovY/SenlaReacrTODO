@@ -1,39 +1,18 @@
-@media screen and (max-width: 900px) {
-
-  #filmPage {
-    display: flex !important;
-    flex-direction: column;
-  }
+* {
+  box-sizing: border-box;
+  color: #fff;
 }
 
-#signWindow,
-#registerWindow,
-#addFilmWindow {
-  max-width: 400px;
-  border: 1px solid gray;
+body {
+  background: #252830;
+  max-width: 900px;
   margin: 0 auto;
-  display: grid;
-  grid-gap: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-
-#signUp,
-#register,
-#signUpFromRegister,
-#clearRegister,
-#addFilmInPage,
-#clearAddFilmInput {
-  width: calc(100% - 20px);
-}
-
-#addFilm {
-  width: 36px;
-  height: 36px;
-  display: inline;
-  margin-bottom: -14px;
-  margin-left: 15px;
-}
-
-
 
 .flex{
   display: flex;
