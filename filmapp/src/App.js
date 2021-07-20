@@ -55,7 +55,6 @@ export default class App extends Component {
                     }
                 }
             },
-            // add-change film
             title: {
                 value: '',
                 valid: true,
